@@ -1,0 +1,264 @@
+/*
+  Section Overview styles
+  Two-column feature card layout with a centre blob placeholder.
+*/
+
+/* ---------------------------------------------------------- */
+/* Section shell                                               */
+/* ---------------------------------------------------------- */
+.overview {
+  position: relative;
+  background: var(--color-zinc-950);
+  padding: 96px 62px;
+}
+
+.overview__container {
+  position: relative;
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
+/* ---------------------------------------------------------- */
+/* Header                                                      */
+/* ---------------------------------------------------------- */
+.overview__header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  text-align: center;
+  max-width: 586px;
+  margin: 0 auto;
+}
+
+.overview__eyebrow {
+  margin: 0;
+  color: var(--color-zinc-400);
+}
+
+.overview__headline {
+  margin: 0;
+  color: var(--color-white);
+}
+
+/* ---------------------------------------------------------- */
+/* Body — columns + blob                                       */
+/* ---------------------------------------------------------- */
+.overview__body {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0;
+}
+
+/* ---------------------------------------------------------- */
+/* Blob — centred background element                           */
+/* Replace contents with a shader canvas when ready.          */
+/* ---------------------------------------------------------- */
+.overview-blob {
+  position: absolute;
+  left: 50%;
+  top: 141px; /* 309px section-top minus 168px col-top offset */
+  transform: translateX(-50%);
+  width: 498px;
+  height: 466px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.overview-blob__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.44;
+  border-radius: 50%;
+}
+
+.overview-blob__logo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 145px;
+  height: auto;
+  opacity: 0.9;
+}
+
+/* ---------------------------------------------------------- */
+/* Columns                                                     */
+/* ---------------------------------------------------------- */
+.overview-col {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 420px;
+  width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.overview-col--right {
+  align-items: flex-end;
+}
+
+.overview-col__label {
+  margin: 0;
+  color: var(--color-zinc-600);
+}
+
+.overview-col--right .overview-col__label {
+  text-align: right;
+  width: 100%;
+}
+
+/* ---------------------------------------------------------- */
+/* Cards                                                       */
+/* ---------------------------------------------------------- */
+.overview-card {
+  width: 100%;
+  border: 1px solid var(--color-zinc-900);
+  border-radius: 4px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 31px;
+  min-height: 675px;
+  background: transparent;
+}
+
+.overview-card--right {
+  min-height: 674px;
+}
+
+/* ---------------------------------------------------------- */
+/* Feature block (one per half-card)                           */
+/* ---------------------------------------------------------- */
+.overview-feature {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 0;
+}
+
+.overview-feature__top {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Divider between two feature blocks */
+.overview-divider {
+  margin: 0;
+  border: none;
+  border-top: 1px solid var(--color-zinc-800);
+}
+
+/* ---------------------------------------------------------- */
+/* Badge chip (API / CRM / Analytics)                          */
+/* ---------------------------------------------------------- */
+.overview-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 12px;
+  background: var(--color-zinc-900);
+  border-radius: 30px;
+  color: var(--color-white);
+  text-transform: uppercase;
+  letter-spacing: 0;
+  align-self: flex-start;
+}
+
+.overview-feature__title {
+  margin: 0;
+  color: var(--color-white);
+}
+
+.overview-feature__desc {
+  margin: 0;
+  color: var(--color-zinc-500);
+}
+
+/* ---------------------------------------------------------- */
+/* Feature tags list                                           */
+/* ---------------------------------------------------------- */
+.overview-tags {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.overview-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border: 1px solid var(--color-zinc-800);
+  border-radius: 4px;
+  align-self: flex-start;
+}
+
+.overview-tag__plus {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--color-white);
+  flex-shrink: 0;
+}
+
+.overview-tag__text {
+  color: var(--color-zinc-400);
+}
+
+/* ---------------------------------------------------------- */
+/* Responsive                                                  */
+/* ---------------------------------------------------------- */
+@media (max-width: 1100px) {
+  .overview__body {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .overview-col {
+    flex: none;
+    width: 100%;
+    max-width: 600px;
+    align-self: center;
+  }
+
+  .overview-col--right {
+    align-items: flex-start;
+  }
+
+  .overview-col--right .overview-col__label {
+    text-align: left;
+  }
+
+  .overview-blob {
+    display: none;
+  }
+
+  .overview-card {
+    min-height: auto;
+  }
+
+  .overview-card--right {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .overview {
+    padding: 64px 20px;
+  }
+}

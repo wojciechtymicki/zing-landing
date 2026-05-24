@@ -1,0 +1,190 @@
+/*
+  Section News styles
+  "Latest news" headline + 4 article cards in a horizontal row.
+  Cards share collapsed borders (no double lines between them).
+  No thumbnails, no dates — just type label + headline + arrow icon.
+*/
+
+/* ---------------------------------------------------------- */
+/* Section shell                                               */
+/* ---------------------------------------------------------- */
+.news {
+  background: var(--color-zinc-950);
+  padding: 96px 62px;
+}
+
+.news__container {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* ---------------------------------------------------------- */
+/* Heading                                                     */
+/* ---------------------------------------------------------- */
+.news__headline {
+  margin: 0;
+  color: var(--color-white);
+}
+
+/* ---------------------------------------------------------- */
+/* Cards grid                                                  */
+/* ---------------------------------------------------------- */
+.news__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* ---------------------------------------------------------- */
+/* News card — full-border, collapsed between siblings        */
+/* ---------------------------------------------------------- */
+.news-card {
+  border: 1px solid var(--color-zinc-900);
+  padding: 24px;
+  min-height: 266px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 150ms ease;
+}
+
+/* Collapse left border on all but the first card */
+.news-card + .news-card {
+  border-left: none;
+}
+
+/* Rounded corners on the outer edges only */
+.news-card:first-child {
+  border-radius: 4px 0 0 4px;
+}
+
+.news-card:last-child {
+  border-radius: 0 4px 4px 0;
+}
+
+.news-card:hover {
+  background: var(--color-zinc-900);
+}
+
+/* ---------------------------------------------------------- */
+/* Card content                                                */
+/* ---------------------------------------------------------- */
+.news-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.news-card__type {
+  margin: 0;
+  color: var(--color-zinc-500);
+}
+
+.news-card__title {
+  margin: 0;
+  color: var(--color-white);
+}
+
+/* ---------------------------------------------------------- */
+/* Arrow icon pill                                             */
+/* ---------------------------------------------------------- */
+.news-card__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--color-zinc-900);
+  border-radius: 24px;
+  color: var(--color-white);
+  flex-shrink: 0;
+  transition: background 150ms ease, transform 150ms ease;
+}
+
+.news-card:hover .news-card__arrow {
+  background: var(--color-zinc-700);
+  transform: translate(2px, -2px);
+}
+
+.news-card__arrow svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------------------------------------------------------- */
+/* Responsive                                                  */
+/* ---------------------------------------------------------- */
+@media (max-width: 1100px) {
+  .news {
+    padding: 64px 20px;
+  }
+}
+
+@media (max-width: 900px) {
+  .news__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Re-apply borders for 2-col layout */
+  .news-card + .news-card {
+    border-left: 1px solid var(--color-zinc-900);
+  }
+
+  .news-card:nth-child(2n) {
+    border-left: none;
+  }
+
+  /* Re-apply top border collapse for rows after the first */
+  .news-card:nth-child(n + 3) {
+    border-top: none;
+  }
+
+  /* Reset all corner radii, apply only to corners */
+  .news-card {
+    border-radius: 0;
+  }
+
+  .news-card:first-child {
+    border-radius: 4px 0 0 0;
+  }
+
+  .news-card:nth-child(2) {
+    border-radius: 0 4px 0 0;
+  }
+
+  .news-card:nth-last-child(2) {
+    border-radius: 0 0 0 4px;
+  }
+
+  .news-card:last-child {
+    border-radius: 0 0 4px 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .news__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .news-card + .news-card {
+    border-left: 1px solid var(--color-zinc-900);
+    border-top: none;
+  }
+
+  .news-card {
+    border-radius: 0;
+  }
+
+  .news-card:first-child {
+    border-radius: 4px 4px 0 0;
+  }
+
+  .news-card:last-child {
+    border-radius: 0 0 4px 4px;
+  }
+}

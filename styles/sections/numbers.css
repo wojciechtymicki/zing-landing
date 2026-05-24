@@ -1,0 +1,210 @@
+/*
+  Section Numbers styles
+  Bento-grid layout: text block left, 4 stat cards + 1 image card right.
+  Grid: 4 cols (341px + 3×1fr), 3 rows of 266px each.
+*/
+
+/* ---------------------------------------------------------- */
+/* Section shell                                               */
+/* ---------------------------------------------------------- */
+.numbers {
+  background: var(--color-zinc-950);
+  padding: 96px 62px;
+}
+
+/* ---------------------------------------------------------- */
+/* Grid container                                              */
+/* ---------------------------------------------------------- */
+.numbers__container {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 341px repeat(3, 1fr);
+  grid-template-rows: repeat(3, 266px);
+}
+
+/* ---------------------------------------------------------- */
+/* Text block (col 1, rows 1–2)                               */
+/* ---------------------------------------------------------- */
+.numbers__text {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  padding-top: 43px;
+  padding-right: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.numbers__eyebrow {
+  margin: 0;
+  color: var(--color-zinc-400);
+}
+
+.numbers__headline {
+  margin: 0;
+  color: var(--color-white);
+}
+
+.numbers__body {
+  margin: 0;
+  color: var(--color-zinc-100);
+}
+
+/* ---------------------------------------------------------- */
+/* Stat card — base                                            */
+/* ---------------------------------------------------------- */
+.numbers-card {
+  border: 1px solid var(--color-zinc-900);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.numbers-card__value {
+  margin: 0;
+  color: var(--color-white);
+}
+
+.numbers-card__label {
+  margin: 0;
+  color: var(--color-white);
+}
+
+/* ---------------------------------------------------------- */
+/* Card positions, border adjustments, and corner radii       */
+/* ---------------------------------------------------------- */
+
+/* Row 1, col 3 — top-left corner of card cluster */
+.numbers-card--ggr-uplift {
+  grid-column: 3;
+  grid-row: 1;
+  border-radius: 4px 0 0 0;
+}
+
+/* Row 1, col 4 — top-right corner */
+.numbers-card--games-played {
+  grid-column: 4;
+  grid-row: 1;
+  border-left: none;
+  border-radius: 0 4px 0 0;
+}
+
+/* Row 2, col 2 — protrudes left; left corners rounded */
+.numbers-card--active-days {
+  grid-column: 2;
+  grid-row: 2;
+  border-radius: 4px 0 0 4px;
+}
+
+/* Row 2, col 3 — image card */
+.numbers-card--image {
+  grid-column: 3;
+  grid-row: 2;
+  border-left: none;
+  border-top: none;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  overflow: hidden;
+}
+
+/* Row 2, col 4 */
+.numbers-card--lobby-time {
+  grid-column: 4;
+  grid-row: 2;
+  border-left: none;
+  border-top: none;
+}
+
+/* Row 3, cols 3–4 — bottom corners rounded */
+.numbers-card--ggr-boost {
+  grid-column: 3 / span 2;
+  grid-row: 3;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+}
+
+/* ---------------------------------------------------------- */
+/* Image / blob placeholder                                    */
+/* ---------------------------------------------------------- */
+.numbers-card__blob {
+  width: auto;
+  height: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  display: block;
+}
+
+/* ---------------------------------------------------------- */
+/* Responsive                                                  */
+/* ---------------------------------------------------------- */
+@media (max-width: 1100px) {
+  .numbers {
+    padding: 64px 20px;
+  }
+}
+
+@media (max-width: 900px) {
+  .numbers__container {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 0;
+  }
+
+  .numbers__text {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 40px;
+  }
+
+  /* Reset all card positions — let them flow 2-up */
+  .numbers-card--ggr-uplift,
+  .numbers-card--games-played,
+  .numbers-card--active-days,
+  .numbers-card--image,
+  .numbers-card--lobby-time,
+  .numbers-card--ggr-boost {
+    grid-column: unset;
+    grid-row: unset;
+    border-radius: 0;
+    border-left: 1px solid var(--color-zinc-900);
+    border-top: 1px solid var(--color-zinc-900);
+  }
+
+  /* Collapse double borders horizontally */
+  .numbers-card:nth-of-type(even) {
+    border-left: none;
+  }
+
+  /* Collapse double borders vertically (rows after first) */
+  .numbers-card--active-days,
+  .numbers-card--image,
+  .numbers-card--lobby-time,
+  .numbers-card--ggr-boost {
+    border-top: none;
+  }
+
+  .numbers-card--ggr-boost {
+    grid-column: 1 / span 2;
+  }
+}
+
+@media (max-width: 560px) {
+  .numbers__container {
+    grid-template-columns: 1fr;
+  }
+
+  .numbers-card,
+  .numbers-card--ggr-boost {
+    grid-column: 1;
+    border-left: 1px solid var(--color-zinc-900);
+  }
+
+  .numbers-card:not(.numbers-card--ggr-uplift) {
+    border-top: none;
+  }
+}
