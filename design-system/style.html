@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zing — Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="typography.css">
+  <style>
+    /* ── Doc shell ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--color-purple-950);
+      color: var(--color-white);
+      font-family: var(--font-body);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── Sidebar ─────────────────────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 220px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--color-surface-powder-08);
+      padding: 32px 0;
+      overflow-y: auto;
+    }
+
+    .sidebar-logo {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--tracking-overhead);
+      text-transform: uppercase;
+      color: var(--color-powder-neutral-600);
+      padding: 0 24px 32px;
+    }
+
+    .sidebar-logo span {
+      color: var(--color-white);
+    }
+
+    .sidebar-section-label {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: var(--font-weight-medium);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--color-powder-neutral-600);
+      padding: 16px 24px 8px;
+    }
+
+    .sidebar a {
+      display: block;
+      font-size: 13px;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-powder-neutral-500);
+      text-decoration: none;
+      padding: 6px 24px;
+      letter-spacing: var(--tracking-nav);
+      transition: color 0.15s ease;
+    }
+
+    .sidebar a:hover {
+      color: var(--color-white);
+    }
+
+    /* ── Main content ──────────────────────────────────────── */
+    .main {
+      flex: 1;
+      padding: 64px 72px;
+      max-width: 900px;
+    }
+
+    .page-title {
+      font-size: var(--font-size-hero);
+      font-weight: var(--font-weight-medium);
+      line-height: var(--line-height-hero);
+      letter-spacing: var(--tracking-hero);
+      margin-bottom: 8px;
+    }
+
+    .page-subtitle {
+      font-size: var(--font-size-body-s);
+      color: var(--color-powder-neutral-500);
+      letter-spacing: var(--tracking-body-s);
+      margin-bottom: 72px;
+    }
+
+    /* ── Section ───────────────────────────────────────────── */
+    .doc-section {
+      margin-bottom: 80px;
+    }
+
+    .doc-section + .doc-section {
+      border-top: 1px solid var(--color-surface-powder-08);
+      padding-top: 72px;
+    }
+
+    .section-eyebrow {
+      font-size: var(--font-size-overhead);
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--tracking-overhead);
+      text-transform: uppercase;
+      color: var(--color-powder-neutral-600);
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: var(--font-size-h2);
+      font-weight: var(--font-weight-medium);
+      line-height: var(--line-height-h2);
+      letter-spacing: var(--tracking-h2);
+      margin-bottom: 40px;
+    }
+
+    /* ── Color swatches ─────────────────────────────────────── */
+    .color-group {
+      margin-bottom: 40px;
+    }
+
+    .color-group-label {
+      font-size: var(--font-size-overhead);
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--tracking-overhead);
+      text-transform: uppercase;
+      color: var(--color-powder-neutral-600);
+      margin-bottom: 16px;
+    }
+
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+    }
+
+    .swatch {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--color-surface-powder-08);
+    }
+
+    .swatch-color {
+      height: 64px;
+    }
+
+    .swatch-info {
+      padding: 10px 12px;
+      background: var(--color-surface-powder-04);
+    }
+
+    .swatch-name {
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-white);
+      letter-spacing: -0.1px;
+      margin-bottom: 2px;
+      word-break: break-all;
+    }
+
+    .swatch-value {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-powder-neutral-500);
+      letter-spacing: var(--tracking-code);
+    }
+
+    /* ── Typography specimens ───────────────────────────────── */
+    .type-row {
+      display: flex;
+      align-items: baseline;
+      gap: 32px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--color-surface-powder-04);
+    }
+
+    .type-row:first-child {
+      border-top: 1px solid var(--color-surface-powder-04);
+    }
+
+    .type-meta {
+      flex-shrink: 0;
+      width: 140px;
+    }
+
+    .type-meta-name {
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-powder-neutral-600);
+      letter-spacing: var(--tracking-overhead);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .type-meta-detail {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--color-powder-neutral-500);
+      letter-spacing: var(--tracking-code);
+      line-height: 1.6;
+    }
+
+    .type-specimen {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    /* ── Spacing scale ──────────────────────────────────────── */
+    .spacing-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 8px 0;
+    }
+
+    .spacing-label {
+      width: 120px;
+      flex-shrink: 0;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-powder-neutral-500);
+      letter-spacing: var(--tracking-code);
+    }
+
+    .spacing-bar-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .spacing-bar {
+      height: 8px;
+      background: var(--color-surface-powder-40);
+      border-radius: var(--radius-full);
+      flex-shrink: 0;
+    }
+
+    .spacing-px {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-powder-neutral-600);
+    }
+
+    /* ── Radius demos ───────────────────────────────────────── */
+    .radius-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 16px;
+    }
+
+    .radius-card {
+      padding: 20px;
+      background: var(--color-surface-powder-08);
+      border: 1px solid var(--color-surface-powder-10);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .radius-box {
+      width: 64px;
+      height: 40px;
+      background: var(--color-surface-powder-40);
+    }
+
+    .radius-name {
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-white);
+      letter-spacing: -0.1px;
+    }
+
+    .radius-value {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--color-powder-neutral-500);
+    }
+
+    /* ── Shadow demos ───────────────────────────────────────── */
+    .shadow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .shadow-card {
+      padding: 32px 24px;
+      background: var(--color-surface-powder-04);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-surface-powder-08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .shadow-demo-box {
+      width: 80px;
+      height: 40px;
+      background: var(--color-surface-powder-40);
+      border-radius: var(--radius-pill);
+    }
+
+    .shadow-name {
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-white);
+    }
+
+    .shadow-value {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--color-powder-neutral-500);
+      text-align: center;
+      word-break: break-word;
+    }
+
+    /* ── Token table ─────────────────────────────────────────── */
+    .token-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .token-table th {
+      text-align: left;
+      font-size: 10px;
+      font-weight: var(--font-weight-medium);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--color-powder-neutral-600);
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--color-surface-powder-08);
+    }
+
+    .token-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--color-surface-powder-04);
+      vertical-align: middle;
+    }
+
+    .token-table td:first-child {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-powder-500);
+    }
+
+    .token-table td:last-child {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-powder-neutral-500);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Sidebar ────────────────────────────────────────── -->
+  <aside class="sidebar">
+    <div class="sidebar-logo"><span>Zing</span> Design System</div>
+
+    <div class="sidebar-section-label">Foundations</div>
+    <a href="#colors">Colors</a>
+    <a href="#typography">Typography</a>
+    <a href="#spacing">Spacing</a>
+    <a href="#radius">Border Radius</a>
+    <a href="#shadows">Shadows</a>
+
+    <div class="sidebar-section-label">Reference</div>
+    <a href="#tokens">All Tokens</a>
+  </aside>
+
+  <!-- ── Main ───────────────────────────────────────────── -->
+  <main class="main">
+
+    <p class="section-eyebrow" style="margin-bottom:16px;">Foundations</p>
+    <h1 class="page-title">Design<br>System</h1>
+    <p class="page-subtitle">Extracted from Figma · 42 tokens · Last updated June 2026</p>
+
+    <!-- ━━━━━━━━━━━━ COLORS ━━━━━━━━━━━━ -->
+    <section class="doc-section" id="colors">
+      <p class="section-eyebrow">01</p>
+      <h2 class="section-title">Colors</h2>
+
+      <div class="color-group">
+        <p class="color-group-label">Base</p>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch-color" style="background: var(--color-white);"></div>
+            <div class="swatch-info">
+              <p class="swatch-name">--color-white</p>
+              <p class="swatch-value">#f2e9ff</p>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: var(--color-black); border-bottom: 1px solid var(--color-surface-powder-08);"></div>
+            <div class="swatch-info">
+              <p class="swatch-name">--color-black</p>
+              <p class="swatch-value">#060506</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="color-group">
+        <p class="color-group-label">Surface / Powder</p>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch-color" style="background: var(--color-surface-200);"></div>
+            <div class="swatch-info">
+              <p class="swatch-name">--color-surface-200</p>
+              <p class="swatch-value">#dec7ff</p>
+            </div>
+          </div>
+          <div class="swatch" style="background: var(--color-purple-950);">
+            <div class="swatch-color" style="background: var(--color-surface-powder-40); border-bottom: 1px solid var(--color-surface-powder-08);"></div>
+            <div class="swatch-info">
+              <p class="swatch-name">--color-surface-powder-40</p>
+              <p class="swatch-value">#dec7ff66 · 40%</p>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: var(--color-surface-powder-10); border-bottom: 1px solid var(--color-surface-powder-08);"></div>
+            <div class="swatch-info">
+              <p class="swatch-name">--color-surface-powder-10</p>
+              <p class="swatch-value">#dec7ff1a · 10%</p>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: var(--color-surface-powder-08); border-bottom: 1px solid var(--color-surface-powder-08);"></div>
+            <div class="swatch-info">
+              <p class="swatch-name">--color-surface-powder-08</p>
+              <p class="swatch-value">#dec7ff14 · 8%</p>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: var(--color-surface-powder-04); border-bottom: 1px solid var(--color-surface-powder-08);"></div>
+            <div class="swatch-info">
+              <p class="swatch-name">--color-surface-powder-04</p>
+              <p class="swatch-value">#dec7ff0a · 4%</p>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: var(--color-surface-powder-02); border-bottom: 1px solid var(--color-surface-powder-08);"></div>
+            <div class="swatch-info">
+              <p class="swatch-name">--color-surface-powder-02</p>
+              <p class="swatch-value">#dec7ff05 · 2%</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="color-group">
+        <p class="color-group-label">Surface / Black</p>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch-color" style="background: var(--color-surface-black-90); border-bottom: 1px solid var(--color-surface-powder-08);"></div>
+            <div class="swatch-info">
+              <p class="swatch-name">--color-surface-black-90</p>
+              <p class="swatch-value">#060506e5 · 90%</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="color-group">
+        <p class="color-group-label">Powder scale</p>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch-color" style="background: var(--color-powder-500);"></div>
+            <div class="swatch-info">
+              <p class="swatch-name">--color-powder-500</p>
+              <p class="swatch-value">#a98ac8</p>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: var(--color-powder-neutral-500);"></div>
+            <div class="swatch-info">
+              <p class="swatch-name">--color-powder-neutral-500</p>
+              <p class="swatch-value">#877c97</p>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: var(--color-powder-neutral-600);"></div>
+            <div class="swatch-info">
+              <p class="swatch-name">--color-powder-neutral-600</p>
+              <p class="swatch-value">#60566e</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="color-group">
+        <p class="color-group-label">Purple scale</p>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch-color" style="background: var(--color-purple-500);"></div>
+            <div class="swatch-info">
+              <p class="swatch-name">--color-purple-500</p>
+              <p class="swatch-value">#522699</p>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: var(--color-purple-800);"></div>
+            <div class="swatch-info">
+              <p class="swatch-name">--color-purple-800</p>
+              <p class="swatch-value">#10061e</p>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: var(--color-purple-950); border-bottom: 1px solid var(--color-surface-powder-08);"></div>
+            <div class="swatch-info">
+              <p class="swatch-name">--color-purple-950</p>
+              <p class="swatch-value">#0c0911</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="color-group">
+        <p class="color-group-label">Zinc scale</p>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch-color" style="background: var(--color-zinc-100);"></div>
+            <div class="swatch-info">
+              <p class="swatch-name">--color-zinc-100</p>
+              <p class="swatch-value">#f4f4f5</p>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: var(--color-zinc-300);"></div>
+            <div class="swatch-info">
+              <p class="swatch-name">--color-zinc-300</p>
+              <p class="swatch-value">#d4d4d8</p>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: var(--color-zinc-700);"></div>
+            <div class="swatch-info">
+              <p class="swatch-name">--color-zinc-700</p>
+              <p class="swatch-value">#3f3f47</p>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: var(--color-zinc-900);"></div>
+            <div class="swatch-info">
+              <p class="swatch-name">--color-zinc-900</p>
+              <p class="swatch-value">#18181b</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ━━━━━━━━━━━━ TYPOGRAPHY ━━━━━━━━━━━━ -->
+    <section class="doc-section" id="typography">
+      <p class="section-eyebrow">02</p>
+      <h2 class="section-title">Typography</h2>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <p class="type-meta-name">Hero</p>
+          <p class="type-meta-detail">72px / 500<br>lh: 1<br>ls: −2.88px</p>
+        </div>
+        <div class="type-specimen" style="overflow: hidden;">
+          <span class="text-hero" style="color: var(--color-white); white-space: nowrap;">Zing</span>
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <p class="type-meta-name">H2</p>
+          <p class="type-meta-detail">32px / 500<br>lh: 1.15<br>ls: −1.15px</p>
+        </div>
+        <div class="type-specimen">
+          <span class="text-h2" style="color: var(--color-white);">The quick brown fox</span>
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <p class="type-meta-name">H4</p>
+          <p class="type-meta-detail">24px / 500<br>lh: 1.15<br>ls: −0.3px</p>
+        </div>
+        <div class="type-specimen">
+          <span class="text-h4" style="color: var(--color-white);">The quick brown fox jumps</span>
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <p class="type-meta-name">H5</p>
+          <p class="type-meta-detail">15px / 500<br>lh: 1.25<br>ls: −0.15px</p>
+        </div>
+        <div class="type-specimen">
+          <span class="text-h5" style="color: var(--color-white);">The quick brown fox jumps over the lazy dog</span>
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <p class="type-meta-name">Body M</p>
+          <p class="type-meta-detail">15px / 500<br>lh: 1.45<br>ls: −0.17px</p>
+        </div>
+        <div class="type-specimen">
+          <span class="text-body-m" style="color: var(--color-white);">The quick brown fox jumps over the lazy dog</span>
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <p class="type-meta-name">Body S</p>
+          <p class="type-meta-detail">13px / 500<br>lh: 1.57<br>ls: −0.15px</p>
+        </div>
+        <div class="type-specimen">
+          <span class="text-body-s" style="color: var(--color-white);">The quick brown fox jumps over the lazy dog</span>
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <p class="type-meta-name">Body XS</p>
+          <p class="type-meta-detail">11px / 500<br>lh: 1.3<br>ls: −0.15px</p>
+        </div>
+        <div class="type-specimen">
+          <span class="text-body-xs" style="color: var(--color-white);">The quick brown fox jumps over the lazy dog</span>
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <p class="type-meta-name">Button</p>
+          <p class="type-meta-detail">13px / 500<br>lh: 15.99px<br>ls: −0.14px</p>
+        </div>
+        <div class="type-specimen">
+          <span class="text-button" style="
+            color: var(--color-black);
+            background: var(--color-white);
+            padding: 8px 16px;
+            border-radius: var(--radius-pill);
+            display: inline-block;
+          ">Action Button</span>
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <p class="type-meta-name">Nav</p>
+          <p class="type-meta-detail">13px / 500<br>lh: 1.15<br>ls: −0.14px</p>
+        </div>
+        <div class="type-specimen">
+          <span class="text-nav" style="color: var(--color-white);">Products · Case Studies · Company</span>
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <p class="type-meta-name">Overhead</p>
+          <p class="type-meta-detail">11px / 500<br>lh: 1.2<br>ls: +1.32px<br>UPPERCASE</p>
+        </div>
+        <div class="type-specimen">
+          <span class="text-overhead" style="color: var(--color-powder-neutral-600);">Casino · Sportsbook · Platform</span>
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <p class="type-meta-name">Code</p>
+          <p class="type-meta-detail">12px / 400<br>lh: 18px<br>ls: −0.12px<br>JetBrains Mono</p>
+        </div>
+        <div class="type-specimen">
+          <span class="text-code" style="color: var(--color-powder-neutral-500);">Hey AI — Learn about us</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ━━━━━━━━━━━━ SPACING ━━━━━━━━━━━━ -->
+    <section class="doc-section" id="spacing">
+      <p class="section-eyebrow">03</p>
+      <h2 class="section-title">Spacing</h2>
+      <p class="text-body-s" style="color: var(--color-powder-neutral-500); margin-bottom: 32px;">
+        Inferred from component measurements. Figma does not expose these as named variables.
+      </p>
+
+      <div id="spacing-rows"></div>
+
+      <script>
+        const spacings = [
+          ['--space-2',  2],  ['--space-4',  4],  ['--space-6',  6],
+          ['--space-8',  8],  ['--space-10', 10], ['--space-12', 12],
+          ['--space-16', 16], ['--space-20', 20], ['--space-24', 24],
+          ['--space-32', 32], ['--space-40', 40], ['--space-48', 48],
+          ['--space-56', 56], ['--space-64', 64], ['--space-72', 72],
+        ];
+        const maxPx = 72;
+        const container = document.getElementById('spacing-rows');
+        spacings.forEach(([name, px]) => {
+          container.innerHTML += `
+            <div class="spacing-row">
+              <span class="spacing-label">${name}</span>
+              <div class="spacing-bar-wrap">
+                <div class="spacing-bar" style="width: ${(px / maxPx) * 400}px;"></div>
+                <span class="spacing-px">${px}px</span>
+              </div>
+            </div>`;
+        });
+      </script>
+    </section>
+
+    <!-- ━━━━━━━━━━━━ BORDER RADIUS ━━━━━━━━━━━━ -->
+    <section class="doc-section" id="radius">
+      <p class="section-eyebrow">04</p>
+      <h2 class="section-title">Border Radius</h2>
+
+      <div class="radius-grid">
+        <div class="radius-card" style="border-radius: var(--radius-sm);">
+          <div class="radius-box" style="border-radius: var(--radius-none);"></div>
+          <span class="radius-name">--radius-none</span>
+          <span class="radius-value">0px</span>
+        </div>
+        <div class="radius-card" style="border-radius: var(--radius-sm);">
+          <div class="radius-box" style="border-radius: var(--radius-sm);"></div>
+          <span class="radius-name">--radius-sm</span>
+          <span class="radius-value">4px</span>
+        </div>
+        <div class="radius-card" style="border-radius: var(--radius-sm);">
+          <div class="radius-box" style="border-radius: var(--radius-md);"></div>
+          <span class="radius-name">--radius-md</span>
+          <span class="radius-value">8px</span>
+        </div>
+        <div class="radius-card" style="border-radius: var(--radius-sm);">
+          <div class="radius-box" style="border-radius: var(--radius-lg);"></div>
+          <span class="radius-name">--radius-lg</span>
+          <span class="radius-value">12px</span>
+        </div>
+        <div class="radius-card" style="border-radius: var(--radius-sm);">
+          <div class="radius-box" style="border-radius: var(--radius-xl);"></div>
+          <span class="radius-name">--radius-xl</span>
+          <span class="radius-value">16px</span>
+        </div>
+        <div class="radius-card" style="border-radius: var(--radius-sm);">
+          <div class="radius-box" style="border-radius: var(--radius-2xl);"></div>
+          <span class="radius-name">--radius-2xl</span>
+          <span class="radius-value">24px</span>
+        </div>
+        <div class="radius-card" style="border-radius: var(--radius-sm);">
+          <div class="radius-box" style="border-radius: var(--radius-pill);"></div>
+          <span class="radius-name">--radius-pill</span>
+          <span class="radius-value">32px · button</span>
+        </div>
+        <div class="radius-card" style="border-radius: var(--radius-sm);">
+          <div class="radius-box" style="border-radius: var(--radius-eye);"></div>
+          <span class="radius-name">--radius-eye</span>
+          <span class="radius-value">17.5px · capsule</span>
+        </div>
+        <div class="radius-card" style="border-radius: var(--radius-sm);">
+          <div class="radius-box" style="border-radius: var(--radius-full);"></div>
+          <span class="radius-name">--radius-full</span>
+          <span class="radius-value">9999px</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ━━━━━━━━━━━━ SHADOWS ━━━━━━━━━━━━ -->
+    <section class="doc-section" id="shadows">
+      <p class="section-eyebrow">05</p>
+      <h2 class="section-title">Shadows &amp; Glows</h2>
+
+      <div class="shadow-grid">
+        <div class="shadow-card">
+          <div class="shadow-demo-box" style="box-shadow: var(--shadow-glow-white);"></div>
+          <span class="shadow-name">--shadow-glow-white</span>
+          <span class="shadow-value">0 0 14px 0<br>var(--color-white)</span>
+        </div>
+        <div class="shadow-card">
+          <div class="shadow-demo-box" style="box-shadow: var(--shadow-glow-purple); background: var(--color-purple-500);"></div>
+          <span class="shadow-name">--shadow-glow-purple</span>
+          <span class="shadow-value">0 0 24px 0<br>var(--color-purple-500)</span>
+        </div>
+      </div>
+
+      <p class="text-body-xs" style="color: var(--color-powder-neutral-600); margin-top: 24px;">
+        Note: "Txt Gradient" is defined in Figma but has no resolvable value — it was not mapped.
+      </p>
+    </section>
+
+    <!-- ━━━━━━━━━━━━ ALL TOKENS ━━━━━━━━━━━━ -->
+    <section class="doc-section" id="tokens">
+      <p class="section-eyebrow">Reference</p>
+      <h2 class="section-title">All Tokens</h2>
+
+      <table class="token-table">
+        <thead>
+          <tr>
+            <th>Token</th>
+            <th>Figma name</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>--color-white</td><td>white</td><td>#f2e9ff</td></tr>
+          <tr><td>--color-black</td><td>black</td><td>#060506</td></tr>
+          <tr><td>--color-surface-200</td><td>Surface 200</td><td>#dec7ff</td></tr>
+          <tr><td>--color-surface-powder-02</td><td>Surface/Powder/Surface - 02</td><td>#dec7ff05</td></tr>
+          <tr><td>--color-surface-powder-04</td><td>Surface/Powder/Surface - 04</td><td>#dec7ff0a</td></tr>
+          <tr><td>--color-surface-powder-08</td><td>Surface/Powder/Surface - 08</td><td>#dec7ff14</td></tr>
+          <tr><td>--color-surface-powder-10</td><td>Surface/Powder/Surface - 10</td><td>#dec7ff1a</td></tr>
+          <tr><td>--color-surface-powder-40</td><td>Surface/Powder/Surface - 40</td><td>#dec7ff66</td></tr>
+          <tr><td>--color-surface-black-90</td><td>Surface/Black/Black - 90</td><td>#060506e5</td></tr>
+          <tr><td>--color-powder-500</td><td>Powder 500</td><td>#a98ac8</td></tr>
+          <tr><td>--color-powder-neutral-500</td><td>Powder Neutral 500</td><td>#877c97</td></tr>
+          <tr><td>--color-powder-neutral-600</td><td>Powder Neutral 600</td><td>#60566e</td></tr>
+          <tr><td>--color-purple-500</td><td>Purple 500</td><td>#522699</td></tr>
+          <tr><td>--color-purple-800</td><td>Purple 800</td><td>#10061e</td></tr>
+          <tr><td>--color-purple-950</td><td>Purple 950</td><td>#0c0911</td></tr>
+          <tr><td>--color-zinc-100</td><td>zinc/100</td><td>#f4f4f5</td></tr>
+          <tr><td>--color-zinc-300</td><td>zinc/300</td><td>#d4d4d8</td></tr>
+          <tr><td>--color-zinc-700</td><td>zinc/700</td><td>#3f3f47</td></tr>
+          <tr><td>--color-zinc-900</td><td>zinc/900</td><td>#18181b</td></tr>
+          <tr><td>--font-body</td><td>Body</td><td>'General Sans'</td></tr>
+          <tr><td>--font-mono</td><td>Mono</td><td>'JetBrains Mono'</td></tr>
+          <tr><td>--font-size-hero</td><td>Hero (size)</td><td>72px</td></tr>
+          <tr><td>--font-size-h2</td><td>H2 (size)</td><td>32px</td></tr>
+          <tr><td>--font-size-h4</td><td>H4 (size)</td><td>24px</td></tr>
+          <tr><td>--font-size-h5</td><td>H5 (size)</td><td>15px</td></tr>
+          <tr><td>--font-size-body-m</td><td>Body M (size)</td><td>15px</td></tr>
+          <tr><td>--font-size-body-s</td><td>Body S (size)</td><td>13px</td></tr>
+          <tr><td>--font-size-body-xs</td><td>Body XS (size)</td><td>11px</td></tr>
+          <tr><td>--font-size-button</td><td>Button (size)</td><td>13px</td></tr>
+          <tr><td>--font-size-nav</td><td>Navigation (size)</td><td>13px</td></tr>
+          <tr><td>--font-size-overhead</td><td>Overhead (size)</td><td>11px</td></tr>
+          <tr><td>--font-size-code</td><td>code (size)</td><td>12px</td></tr>
+          <tr><td>--radius-pill</td><td>button rounded</td><td>32px</td></tr>
+          <tr><td>--radius-eye</td><td>eye capsule</td><td>17.5px</td></tr>
+          <tr><td>--shadow-glow-white</td><td>eye glow effect</td><td>0 0 14px 0 #f2e9ff</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+</body>
+</html>

@@ -1,0 +1,177 @@
+/**
+ * Zing Design Tokens
+ * Single source of truth — all values extracted from Figma variables.
+ * Do not hardcode any of these values elsewhere.
+ */
+
+:root {
+
+  /* ============================================================
+     COLORS — Base
+     ============================================================ */
+
+  --color-white:  #f2e9ff;  /* Figma: white  */
+  --color-black:  #060506;  /* Figma: black  */
+
+  /* ============================================================
+     COLORS — Surface / Powder
+     Tinted overlays of the base powder (#dec7ff)
+     at increasing opacity levels.
+     ============================================================ */
+
+  --color-surface-200:        #dec7ff;    /* Surface 200 — opaque tint */
+  --color-surface-powder-02:  #dec7ff05;  /* Surface/Powder/Surface - 02  (~2%)  */
+  --color-surface-powder-04:  #dec7ff0a;  /* Surface/Powder/Surface - 04  (~4%)  */
+  --color-surface-powder-08:  #dec7ff14;  /* Surface/Powder/Surface - 08  (~8%)  */
+  --color-surface-powder-10:  #dec7ff1a;  /* Surface/Powder/Surface - 10  (~10%) */
+  --color-surface-powder-40:  #dec7ff66;  /* Surface/Powder/Surface - 40  (~40%) */
+
+  /* ============================================================
+     COLORS — Surface / Black
+     ============================================================ */
+
+  --color-surface-black-90: #060506e5;  /* Surface/Black/Black - 90 (~90%) */
+
+  /* ============================================================
+     COLORS — Powder scale
+     ============================================================ */
+
+  --color-powder-500:           #a98ac8;  /* Powder 500          */
+  --color-powder-neutral-500:   #877c97;  /* Powder Neutral 500  */
+  --color-powder-neutral-600:   #60566e;  /* Powder Neutral 600  */
+
+  /* ============================================================
+     COLORS — Purple scale
+     ============================================================ */
+
+  --color-purple-500:  #522699;  /* Purple 500  */
+  --color-purple-800:  #10061e;  /* Purple 800  */
+  --color-purple-950:  #0c0911;  /* Purple 950  */
+
+  /* ============================================================
+     COLORS — Zinc scale (neutral greys)
+     ============================================================ */
+
+  --color-zinc-100:  #f4f4f5;  /* zinc/100 */
+  --color-zinc-300:  #d4d4d8;  /* zinc/300 */
+  --color-zinc-700:  #3f3f47;  /* zinc/700 */
+  --color-zinc-900:  #18181b;  /* zinc/900 */
+
+  /* ============================================================
+     TYPOGRAPHY — Font families
+     ============================================================ */
+
+  --font-body:  'General Sans', system-ui, sans-serif;  /* Figma: Body */
+  --font-mono:  'JetBrains Mono', monospace;             /* Figma: Mono */
+
+  /* ============================================================
+     TYPOGRAPHY — Font size tokens
+     These are the raw size variables used in Figma (--11, --13 etc.)
+     ============================================================ */
+
+  --font-size-11:  11px;
+  --font-size-13:  13px;
+  --font-size-15:  15px;
+  --font-size-24:  24px;
+  --font-size-32:  32px;
+  --font-size-72:  72px;
+
+  /* ============================================================
+     TYPOGRAPHY — Named scale aliases
+     Maps semantic role names to size tokens.
+     ============================================================ */
+
+  --font-size-hero:      var(--font-size-72);
+  --font-size-h2:        var(--font-size-32);
+  --font-size-h4:        var(--font-size-24);
+  --font-size-h5:        var(--font-size-15);
+  --font-size-body-m:    var(--font-size-15);
+  --font-size-body-s:    var(--font-size-13);
+  --font-size-body-xs:   var(--font-size-11);  /* approx — see note */
+  --font-size-button:    var(--font-size-13);
+  --font-size-nav:       var(--font-size-13);
+  --font-size-overhead:  var(--font-size-11);
+  --font-size-code:      12px;                  /* not in numeric tokens */
+
+  /* ============================================================
+     TYPOGRAPHY — Font weights
+     ============================================================ */
+
+  --font-weight-regular:  400;
+  --font-weight-medium:   500;
+
+  /* ============================================================
+     TYPOGRAPHY — Line heights
+     ============================================================ */
+
+  --line-height-hero:      1;
+  --line-height-h2:        1.15;
+  --line-height-h4:        1.15;
+  --line-height-h5:        1.25;
+  --line-height-body-m:    1.45;
+  --line-height-body-s:    1.57;
+  --line-height-body-xs:   1.3;
+  --line-height-button:    15.99px;
+  --line-height-nav:       1.15;
+  --line-height-overhead:  1.2;
+  --line-height-code:      18px;
+
+  /* ============================================================
+     TYPOGRAPHY — Letter spacing
+     ============================================================ */
+
+  --tracking-hero:      -2.88px;
+  --tracking-h2:        -1.15px;
+  --tracking-h4:        -0.3px;
+  --tracking-h5:        -0.15px;
+  --tracking-body-m:    -0.17px;
+  --tracking-body-s:    -0.15px;
+  --tracking-body-xs:   -0.15px;
+  --tracking-button:    -0.14px;
+  --tracking-nav:       -0.14px;
+  --tracking-overhead:   1.32px;  /* positive — spaced-out label style */
+  --tracking-code:      -0.12px;
+
+  /* ============================================================
+     SPACING — Scale
+     Inferred from component measurements (not Figma variables).
+     ============================================================ */
+
+  --space-2:   2px;
+  --space-4:   4px;
+  --space-6:   6px;
+  --space-8:   8px;
+  --space-10:  10px;
+  --space-12:  12px;
+  --space-16:  16px;
+  --space-20:  20px;
+  --space-24:  24px;
+  --space-32:  32px;
+  --space-40:  40px;
+  --space-48:  48px;
+  --space-56:  56px;
+  --space-64:  64px;
+  --space-72:  72px;
+
+  /* ============================================================
+     BORDER RADIUS
+     ============================================================ */
+
+  --radius-none:   0px;
+  --radius-sm:     4px;
+  --radius-md:     8px;
+  --radius-lg:     12px;
+  --radius-xl:     16px;
+  --radius-2xl:    24px;
+  --radius-pill:   32px;   /* Figma: button rounded-[32px]  */
+  --radius-eye:    17.5px; /* Figma: eye capsule            */
+  --radius-full:   9999px;
+
+  /* ============================================================
+     SHADOWS / EFFECTS
+     ============================================================ */
+
+  --shadow-glow-white:   0 0 14px 0 var(--color-white);    /* character eye glow */
+  --shadow-glow-purple:  0 0 24px 0 var(--color-purple-500);
+
+}

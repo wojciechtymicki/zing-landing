@@ -1,0 +1,479 @@
+/*
+  About page — standalone editorial design
+  Full-page vertical flow. No TOC sidebar.
+  Inspired by: centered hero · stats band · narrative prose ·
+  principle rows · 3-col team · operator cards.
+*/
+
+/* ---------------------------------------------------------- */
+/* Hero                                                        */
+/* ---------------------------------------------------------- */
+.about-hero {
+  padding: 112px 62px 96px;
+  text-align: center;
+  border-bottom: 1px solid var(--color-zinc-900);
+}
+
+.about-hero__eyebrow {
+  margin: 0 0 28px;
+  color: var(--color-zinc-600);
+}
+
+.about-hero__title {
+  margin: 0 auto 28px;
+  max-width: 860px;
+  color: var(--color-white);
+}
+
+.about-hero__lead {
+  margin: 0 auto;
+  max-width: 540px;
+  color: var(--color-zinc-400);
+  line-height: 1.65;
+}
+
+/* ---------------------------------------------------------- */
+/* Shared section wrapper                                      */
+/* ---------------------------------------------------------- */
+.about-section {
+  padding: 96px 62px;
+  border-bottom: 1px solid var(--color-zinc-900);
+}
+
+.about-section--alt {
+  background: var(--color-zinc-900);
+  border-top: 1px solid var(--color-zinc-800);
+  border-bottom: 1px solid var(--color-zinc-800);
+}
+
+.about-section__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ---------------------------------------------------------- */
+/* Story — narrow editorial prose                              */
+/* ---------------------------------------------------------- */
+.about-story {
+  padding: 96px 62px;
+  border-bottom: 1px solid var(--color-zinc-900);
+}
+
+.about-story__inner {
+  max-width: 780px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.about-story__eyebrow {
+  margin: 0 0 28px;
+  color: var(--color-zinc-500);
+}
+
+.about-story__p {
+  margin: 0;
+  padding: 12px 0;
+  color: var(--color-zinc-300);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.75;
+  letter-spacing: -0.16px;
+}
+
+.about-story__p--lead {
+  font-size: 20px;
+  line-height: 1.55;
+  letter-spacing: -0.2px;
+  color: var(--color-zinc-200);
+}
+
+/* ---------------------------------------------------------- */
+/* Stats band                                                  */
+/* ---------------------------------------------------------- */
+.about-stats-band {
+  padding: 64px 62px;
+  background: var(--color-zinc-900);
+  border-top: 1px solid var(--color-zinc-800);
+  border-bottom: 1px solid var(--color-zinc-800);
+}
+
+.about-stats-band__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+
+.about-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 40px 0 0;
+  border-right: 1px solid var(--color-zinc-800);
+  margin-right: 40px;
+}
+
+.about-stat:last-child {
+  border-right: none;
+  margin-right: 0;
+  padding-right: 0;
+}
+
+.about-stat__value {
+  margin: 0;
+  color: var(--color-white);
+  font-family: var(--font-mono);
+  font-size: 42px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -1.5px;
+}
+
+.about-stat__label {
+  margin: 0;
+  color: var(--color-zinc-500);
+}
+
+/* ---------------------------------------------------------- */
+/* Mission — full-bleed centered statement                    */
+/* ---------------------------------------------------------- */
+.about-mission-section {
+  padding: 120px 62px;
+  text-align: center;
+  border-bottom: 1px solid var(--color-zinc-900);
+}
+
+.about-mission-section__eyebrow {
+  margin: 0 0 28px;
+  color: var(--color-zinc-500);
+}
+
+.about-mission-section__headline {
+  margin: 0 auto 48px;
+  max-width: 800px;
+  color: var(--color-white);
+}
+
+.about-mission-quote {
+  max-width: 640px;
+  margin: 0 auto 40px;
+  padding: 32px 40px;
+  border: 1px solid var(--color-zinc-800);
+  border-radius: 8px;
+  text-align: left;
+  position: relative;
+}
+
+.about-mission-quote::before {
+  content: '"';
+  position: absolute;
+  top: -2px;
+  left: 32px;
+  font-size: 80px;
+  line-height: 1;
+  color: var(--color-zinc-800);
+  font-family: var(--font-body);
+  pointer-events: none;
+}
+
+.about-mission-quote__text {
+  margin: 0 0 16px;
+  color: var(--color-zinc-200);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  letter-spacing: -0.18px;
+}
+
+.about-mission-quote__sub {
+  margin: 0;
+  color: var(--color-zinc-400);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.about-mission-section__body {
+  margin: 0 auto;
+  max-width: 560px;
+  color: var(--color-zinc-400);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ---------------------------------------------------------- */
+/* Leadership — 3-col person cards                             */
+/* ---------------------------------------------------------- */
+.about-leadership-section {
+  padding: 96px 62px;
+  background: var(--color-zinc-900);
+  border-top: 1px solid var(--color-zinc-800);
+  border-bottom: 1px solid var(--color-zinc-800);
+}
+
+.about-leadership-section__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.about-leadership-header {
+  margin-bottom: 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.about-leadership-header__eyebrow {
+  margin: 0;
+  color: var(--color-zinc-500);
+}
+
+.about-leadership-header__heading {
+  margin: 0;
+  color: var(--color-white);
+}
+
+.about-leadership-header__lead {
+  margin: 0;
+  color: var(--color-zinc-400);
+  max-width: 520px;
+  line-height: 1.65;
+}
+
+.about-leadership-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.about-person-card {
+  padding: 28px 28px 24px;
+  background: var(--color-zinc-950);
+  border: 1px solid var(--color-zinc-800);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.about-person-card__top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.about-person-card__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-zinc-900);
+  border: 1px solid var(--color-zinc-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-zinc-400);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.about-person-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.about-person-card__name {
+  margin: 0;
+  color: var(--color-white);
+}
+
+.about-person-card__role {
+  margin: 0;
+  color: var(--color-zinc-500);
+}
+
+.about-person-card__bio {
+  margin: 0;
+  color: var(--color-zinc-400);
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.7;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-zinc-900);
+}
+
+.about-leadership-closing {
+  margin: 0;
+  color: var(--color-zinc-500);
+  max-width: 640px;
+  line-height: 1.65;
+}
+
+/* ---------------------------------------------------------- */
+/* Principles — horizontal row list (no borders on cards)     */
+/* ---------------------------------------------------------- */
+.about-principles-section {
+  padding: 96px 62px;
+  border-bottom: 1px solid var(--color-zinc-900);
+}
+
+.about-principles-section__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.about-principles-header {
+  margin-bottom: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.about-principles-header__eyebrow {
+  margin: 0;
+  color: var(--color-zinc-500);
+}
+
+.about-principles-header__heading {
+  margin: 0;
+  color: var(--color-white);
+}
+
+.about-principles-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.about-principle {
+  display: grid;
+  grid-template-columns: 48px 280px 1fr;
+  gap: 48px;
+  align-items: baseline;
+  padding: 28px 0;
+  border-top: 1px solid var(--color-zinc-900);
+}
+
+.about-principle:last-child {
+  border-bottom: 1px solid var(--color-zinc-900);
+}
+
+.about-principle__num {
+  margin: 0;
+  color: var(--color-zinc-700);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1;
+  padding-top: 4px;
+}
+
+.about-principle__title {
+  margin: 0;
+  color: var(--color-white);
+}
+
+.about-principle__desc {
+  margin: 0;
+  color: var(--color-zinc-400);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* ---------------------------------------------------------- */
+/* Operators / partners                                        */
+/* ---------------------------------------------------------- */
+.about-operators-section {
+  padding: 80px 62px;
+  border-bottom: 1px solid var(--color-zinc-900);
+}
+
+.about-operators-section__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.about-operators-header {
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.about-operators-header__eyebrow {
+  margin: 0;
+  color: var(--color-zinc-500);
+}
+
+.about-operators-header__heading {
+  margin: 0;
+  color: var(--color-white);
+}
+
+.about-operators-header__sub {
+  margin: 0;
+  color: var(--color-zinc-400);
+  max-width: 500px;
+  line-height: 1.65;
+}
+
+.about-operators-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.about-operator-card {
+  padding: 28px;
+  border: 1px solid var(--color-zinc-900);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-decoration: none;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.about-operator-card:hover {
+  border-color: var(--color-zinc-700);
+  background: rgba(255, 255, 255, 0.012);
+}
+
+.about-operator-card__name {
+  margin: 0;
+  color: var(--color-white);
+}
+
+.about-operator-card__meta {
+  margin: 0;
+  color: var(--color-zinc-500);
+}
+
+.about-operator-card__cta {
+  margin-top: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-zinc-500);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: color 150ms ease;
+}
+
+.about-operator-card:hover .about-operator-card__cta {
+  color: var(--color-zinc-300);
+}
+
+.about-operator-card__cta svg {
+  width: 12px;
+  height: 12px;
+}

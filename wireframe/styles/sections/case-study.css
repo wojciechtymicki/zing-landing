@@ -1,0 +1,287 @@
+/*
+  Case Study page styles
+  Extends solution.css structural patterns with unique case-study components.
+  Shared layout (header, TOC grid, article, related strip) reuses .solution-* classes.
+  New components defined here: snapshot strip, challenge list, feature cards, quotes, stat groups.
+*/
+
+/* ---------------------------------------------------------- */
+/* Client snapshot strip (below meta row in header)            */
+/* ---------------------------------------------------------- */
+.case-study-snapshot {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-zinc-900);
+}
+
+.case-study-snapshot__item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-right: 32px;
+  margin-right: 32px;
+  border-right: 1px solid var(--color-zinc-800);
+}
+
+.case-study-snapshot__item:last-child {
+  border-right: none;
+  padding-right: 0;
+  margin-right: 0;
+}
+
+.case-study-snapshot__label {
+  color: var(--color-zinc-500);
+}
+
+.case-study-snapshot__value {
+  color: var(--color-zinc-100);
+}
+
+/* ---------------------------------------------------------- */
+/* Challenge list                                              */
+/* ---------------------------------------------------------- */
+.case-study-challenges {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.case-study-challenge {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1px solid var(--color-zinc-900);
+  border-left: 2px solid var(--color-zinc-700);
+  border-radius: 0 4px 4px 0;
+  color: var(--color-zinc-300);
+}
+
+.case-study-challenge__dash {
+  color: var(--color-zinc-600);
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.57;
+}
+
+/* ---------------------------------------------------------- */
+/* Feature cards (numbered solution modules)                   */
+/* ---------------------------------------------------------- */
+.case-study-features {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.case-study-feature {
+  padding: 24px;
+  border: 1px solid var(--color-zinc-900);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 150ms ease;
+}
+
+.case-study-feature:hover {
+  border-color: var(--color-zinc-800);
+}
+
+.case-study-feature__header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.case-study-feature__num {
+  color: var(--color-zinc-600);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 18px;
+  flex-shrink: 0;
+}
+
+.case-study-feature__title {
+  margin: 0;
+  color: var(--color-white);
+}
+
+.case-study-feature__desc {
+  margin: 0;
+  color: var(--color-zinc-400);
+}
+
+/* Sub-bullet list inside a feature card */
+.case-study-feature__list {
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-top: 1px solid var(--color-zinc-800);
+  padding-top: 12px;
+}
+
+.case-study-feature__list-item {
+  color: var(--color-zinc-500);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.case-study-feature__list-item::before {
+  content: "–";
+  color: var(--color-zinc-700);
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+/* ---------------------------------------------------------- */
+/* Stat groups (segmented A/B results)                         */
+/* ---------------------------------------------------------- */
+.case-study-stat-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 8px;
+}
+
+.case-study-stat-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.case-study-stat-group__label {
+  margin: 0;
+  color: var(--color-zinc-400);
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 4px 12px;
+  background: var(--color-zinc-900);
+  border: 1px solid var(--color-zinc-800);
+  border-radius: 4px;
+}
+
+/* ---------------------------------------------------------- */
+/* Quote blocks                                                */
+/* ---------------------------------------------------------- */
+.case-study-quotes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.case-study-quote {
+  padding: 24px;
+  border: 1px solid var(--color-zinc-900);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.case-study-quote__mark {
+  color: var(--color-zinc-700);
+  font-size: 40px;
+  line-height: 1;
+  font-family: Georgia, "Times New Roman", serif;
+  flex-shrink: 0;
+  height: 28px;
+  display: block;
+}
+
+.case-study-quote__text {
+  margin: 0;
+  color: var(--color-zinc-300);
+  font-style: italic;
+  flex: 1;
+}
+
+.case-study-quote__author {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-zinc-800);
+  margin-top: auto;
+}
+
+.case-study-quote__name {
+  margin: 0;
+  color: var(--color-white);
+}
+
+.case-study-quote__role {
+  margin: 0;
+  color: var(--color-zinc-500);
+}
+
+/* ---------------------------------------------------------- */
+/* Outcome list (for Entain where no specific % available)     */
+/* ---------------------------------------------------------- */
+.case-study-outcomes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.case-study-outcome {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 20px;
+  border: 1px solid var(--color-zinc-900);
+  border-radius: 6px;
+}
+
+.case-study-outcome__icon {
+  color: var(--color-zinc-400);
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.case-study-outcome__text {
+  margin: 0;
+  color: var(--color-zinc-300);
+}
+
+/* ---------------------------------------------------------- */
+/* Responsive                                                  */
+/* ---------------------------------------------------------- */
+@media (max-width: 960px) {
+  .case-study-snapshot {
+    gap: 16px;
+  }
+
+  .case-study-snapshot__item {
+    border-right: none;
+    padding-right: 0;
+    margin-right: 0;
+    flex: 0 0 calc(50% - 8px);
+  }
+}
+
+@media (max-width: 640px) {
+  .case-study-quotes {
+    grid-template-columns: 1fr;
+  }
+
+  .case-study-snapshot__item {
+    flex: 0 0 100%;
+  }
+}
