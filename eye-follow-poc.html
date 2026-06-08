@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eye Follow POC</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .character-wrap {
+      position: relative;
+      width: 604px;
+      height: 604px;
+    }
+
+    .character-wrap img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      user-select: none;
+      transition: transform 0.12s ease-out;
+      will-change: transform;
+    }
+
+    /* Wrapper handles positional translate from mouse tracking */
+    .eye-wrap {
+      position: absolute;
+      width: 35px;
+      height: 56px;
+      transition: transform 0.08s ease-out;
+      will-change: transform;
+    }
+
+    #eye-left-wrap  { left: 258px; top: 247px; }
+    #eye-right-wrap { left: 310px; top: 247px; }
+
+    /* Inner element handles only the blink scaleY — transform-origin is its own center */
+    .eye {
+      width: 100%;
+      height: 100%;
+      border-radius: 17.5px;
+      background: #f2e9ff;
+      box-shadow: 0 0 14px 0 #f2e9ff;
+      transform-origin: center center;
+    }
+
+    @keyframes blink {
+      0%, 100% { transform: scaleY(1); }
+      50%       { transform: scaleY(0.18); }
+    }
+
+    .eye.blinking {
+      animation: blink 0.08s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+  <div class="character-wrap" id="canvas">
+    <img src="https://www.figma.com/api/mcp/asset/4a01ddac-a10f-4c50-a35b-00fa21b141d9" alt="character" draggable="false">
+    <div class="eye-wrap" id="eye-left-wrap"><div class="eye" id="eye-left"></div></div>
+    <div class="eye-wrap" id="eye-right-wrap"><div class="eye" id="eye-right"></div></div>
+  </div>
+
+  <script>
+    const canvas  = document.getElementById('canvas');
+    const wrapL   = document.getElementById('eye-left-wrap');
+    const wrapR   = document.getElementById('eye-right-wrap');
+    const eyeLeft  = document.getElementById('eye-left');
+    const eyeRight = document.getElementById('eye-right');
+    const charImg  = canvas.querySelector('img');
+
+    const MAX_OFFSET   = 40;
+    const MAX_PARALLAX = 4;
+
+    // Midpoint between the two eyes
+    const groupCx = (258 + 17.5 + 310 + 17.5) / 2;
+    const groupCy = 247 + 28;
+
+    const eyeWraps = [wrapL, wrapR];
+    const eyeEls   = [eyeLeft, eyeRight];
+
+    function moveEyes(mouseX, mouseY) {
+      const rect = canvas.getBoundingClientRect();
+      const fx = mouseX - rect.left;
+      const fy = mouseY - rect.top;
+
+      const dx   = fx - groupCx;
+      const dy   = fy - groupCy;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      let ox = 0, oy = 0;
+      if (dist > 0) {
+        const clamped = Math.min(dist, MAX_OFFSET);
+        ox = (dx / dist) * clamped;
+        oy = (dy / dist) * clamped;
+      }
+
+      for (const wrap of eyeWraps) {
+        wrap.style.transform = `translate(${ox}px, ${oy}px)`;
+      }
+
+      let px = 0, py = 0;
+      if (dist > 0) {
+        const clamped = Math.min(dist, MAX_PARALLAX);
+        px = -(dx / dist) * clamped;
+        py = -(dy / dist) * clamped;
+      }
+      charImg.style.transform = `translate(${px}px, ${py}px)`;
+    }
+
+    function resetEyes() {
+      for (const wrap of eyeWraps) {
+        wrap.style.transform = 'translate(0px, 0px)';
+      }
+      charImg.style.transform = 'translate(0px, 0px)';
+    }
+
+    document.addEventListener('mousemove', (e) => moveEyes(e.clientX, e.clientY));
+    document.addEventListener('mouseleave', resetEyes);
+
+    canvas.addEventListener('click', () => {
+      for (const el of eyeEls) {
+        el.classList.remove('blinking');
+        void el.offsetWidth; // force reflow so re-clicks restart the animation
+        el.classList.add('blinking');
+      }
+      setTimeout(() => {
+        for (const el of eyeEls) el.classList.remove('blinking');
+      }, 80);
+    });
+  </script>
+</body>
+</html>
