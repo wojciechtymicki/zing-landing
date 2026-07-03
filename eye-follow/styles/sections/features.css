@@ -1,0 +1,100 @@
+/*
+  Section Features styles
+  2×2 grid of feature cards over a full-bleed background.png texture.
+  Each card: dark panel, eyebrow + headline top, button bottom.
+  Middle space reserved for per-card illustrations.
+*/
+
+/* ---------------------------------------------------------- */
+/* Section shell — full bleed with bg texture                  */
+/* ---------------------------------------------------------- */
+.features {
+  position: relative;
+  background: var(--color-zinc-950);
+}
+
+.features__bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  max-width: 1300px;
+  margin: 0 auto;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}
+
+.features__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---------------------------------------------------------- */
+/* Grid                                                        */
+/* ---------------------------------------------------------- */
+.features__grid {
+  position: relative;
+  z-index: 1;
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 12px;
+  padding: 12px;
+  min-height: 896px;
+}
+
+/* ---------------------------------------------------------- */
+/* Feature card                                                */
+/* ---------------------------------------------------------- */
+.feature-card {
+  background: var(--color-zinc-950);
+  border-radius: 4px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* Middle area left intentionally empty for per-card illustrations */
+}
+
+.feature-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 384px;
+}
+
+.feature-card__eyebrow {
+  margin: 0;
+  color: var(--color-zinc-400);
+}
+
+.feature-card__headline {
+  margin: 0;
+  color: var(--color-white);
+}
+
+/* ---------------------------------------------------------- */
+/* Responsive                                                  */
+/* ---------------------------------------------------------- */
+@media (max-width: 900px) {
+  .features__grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, auto);
+    min-height: unset;
+  }
+
+  .feature-card {
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 560px) {
+  .features__grid {
+    gap: 8px;
+    padding: 8px;
+  }
+}

@@ -1,0 +1,410 @@
+/*
+  Section Main Feature styles
+  Three stacked blocks: feature (text + illustration), how-it-works, case study.
+  Both "illustration" and "case study" share background.png as their bg frame.
+*/
+
+/* ---------------------------------------------------------- */
+/* Section shell                                               */
+/* ---------------------------------------------------------- */
+.main-feature {
+  background: var(--color-zinc-950);
+  padding: 96px 62px 0;
+}
+
+.main-feature__container {
+  position: relative;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+/* ---------------------------------------------------------- */
+/* Feature row — text left, illustration right                 */
+/* ---------------------------------------------------------- */
+.mf-feature {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+/* Left: text block */
+.mf-text {
+  flex: 0 0 530px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+/* Wraps header + body with 18px gap (matches Figma spacing) */
+.mf-text__content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.mf-text__header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mf-text__eyebrow {
+  margin: 0;
+  color: var(--color-zinc-400);
+}
+
+.mf-text__headline {
+  margin: 0;
+  color: var(--color-white);
+}
+
+.mf-text__body {
+  margin: 0;
+  color: var(--color-zinc-100);
+}
+
+/* "Learn more" button — zinc/400 bg, black text */
+.button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  height: 34px;
+  padding: 8px 16px;
+  background: var(--color-zinc-400);
+  color: var(--color-black);
+  border-radius: 32px;
+  text-decoration: none;
+  transition: background 150ms ease;
+}
+
+.button-secondary:hover {
+  background: var(--color-zinc-300);
+}
+
+/* "Read the case study" outline button */
+.button-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 17px;
+  border: 1px solid var(--color-zinc-100);
+  border-radius: 32px;
+  color: var(--color-white);
+  text-decoration: none;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.button-outline:hover {
+  background: var(--color-zinc-100);
+  color: var(--color-black);
+}
+
+/* ---------------------------------------------------------- */
+/* Illustration                                                */
+/* ---------------------------------------------------------- */
+.mf-illustration {
+  position: relative;
+  flex: 0 0 630px;
+  height: 592px;
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
+}
+
+/* bg frame — background.png texture */
+.mf-illustration__bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
+}
+
+.mf-illustration__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Dark inner panel sitting on top of bg */
+.mf-illustration__panel {
+  position: absolute;
+  inset: 13px;
+  background: var(--color-zinc-950);
+  border-radius: 4px 4px 0 0;
+  overflow: hidden;
+}
+
+/* Game grid */
+.mf-grid {
+  position: absolute;
+  top: 71px;
+  left: 86px;
+  display: grid;
+  grid-template-columns: repeat(10, 40px);
+  grid-template-rows: repeat(10, 40px);
+  gap: 6px;
+}
+
+.mf-grid__cell {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid var(--color-zinc-900);
+}
+
+.mf-grid__cell--dim {
+  border-color: var(--color-zinc-800);
+}
+
+.mf-grid__cell--highlight {
+  background: var(--color-zinc-700);
+  border-color: var(--color-zinc-800);
+}
+
+.mf-grid__cell--empty {
+  border: none;
+  background: none;
+}
+
+/* Game thumbnail overlaid on one specific cell */
+.mf-grid__thumb {
+  position: absolute;
+  /* row 9 (y=439 from grid-top=71 → 439-71=368), col 6 (x=316 from grid-left=86 → 316-86=230) */
+  top: 368px;
+  left: 230px;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.mf-grid__thumb img {
+  width: 124.67%;
+  height: 124%;
+  margin-left: -17.33%;
+  margin-top: -10%;
+  display: block;
+}
+
+/* Player avatar */
+.mf-grid__avatar {
+  position: absolute;
+  /* y=286-71=215 from grid top, x=306-86=220 from grid left */
+  top: 215px;
+  left: 220px;
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.mf-grid__avatar img {
+  width: 204.17%;
+  height: 204.17%;
+  margin-left: -70.83%;
+  margin-top: -54.17%;
+  display: block;
+}
+
+/* Player ID label */
+.mf-grid__label {
+  position: absolute;
+  top: 288px;
+  left: 188px;
+  color: var(--color-zinc-700);
+  z-index: 2;
+}
+
+/* ---------------------------------------------------------- */
+/* How it works — 3 equal columns                             */
+/* ---------------------------------------------------------- */
+.mf-how {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.mf-how__step {
+  padding: 24px;
+  border: 1px solid var(--color-zinc-900);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  border-left: none;
+}
+
+.mf-how__step:first-child {
+  border-left: 1px solid var(--color-zinc-900);
+  border-radius: 0 0 0 4px;
+}
+
+.mf-how__step:last-child {
+  border-radius: 0 0 4px 0;
+}
+
+.mf-how__number {
+  margin: 0;
+  color: var(--color-zinc-600);
+}
+
+.mf-how__content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mf-how__title {
+  margin: 0;
+  color: var(--color-zinc-100);
+}
+
+.mf-how__desc {
+  margin: 0;
+  color: var(--color-zinc-400);
+}
+
+/* ---------------------------------------------------------- */
+/* Case study                                                  */
+/* ---------------------------------------------------------- */
+.mf-case {
+  position: relative;
+  height: 328px;
+  border-radius: 0 0 12px 12px;
+  overflow: hidden;
+}
+
+/* bg frame — background.png texture */
+.mf-case__bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 0 0 12px 12px;
+  overflow: hidden;
+}
+
+.mf-case__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Dark inner panel — only covers 1030/1300 of width */
+.mf-case__panel {
+  position: absolute;
+  inset: 13px;
+  max-width: 967px;
+  background: var(--color-zinc-950);
+  border-radius: 0 0 0 4px;
+  padding: 29px 29px 33px 33px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.mf-case__top {
+  display: flex;
+  flex-direction: column;
+  gap: 41px;
+}
+
+.mf-case__logo {
+  width: 68px;
+  height: 18px;
+  display: block;
+  align-self: flex-start;
+}
+
+.mf-case__quote {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.15;
+  letter-spacing: -0.3px;
+  color: var(--color-white);
+}
+
+.mf-case__bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.mf-case__author-name {
+  margin: 0;
+  color: var(--color-white);
+}
+
+.mf-case__author-role {
+  margin: 0;
+  color: var(--color-zinc-600);
+}
+
+/* ---------------------------------------------------------- */
+/* Responsive                                                  */
+/* ---------------------------------------------------------- */
+@media (max-width: 1100px) {
+  .main-feature {
+    padding: 64px 20px 0;
+  }
+
+  .mf-feature {
+    flex-direction: column;
+  }
+
+  .mf-text {
+    flex: none;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .mf-illustration {
+    flex: none;
+    width: 100%;
+    max-width: 630px;
+    align-self: center;
+  }
+
+  .mf-case__panel {
+    width: calc(100% - 26px);
+  }
+}
+
+@media (max-width: 700px) {
+  .mf-how {
+    grid-template-columns: 1fr;
+  }
+
+  .mf-how__step {
+    border-left: 1px solid var(--color-zinc-900);
+    border-radius: 0;
+  }
+
+  .mf-how__step:first-child {
+    border-radius: 0;
+  }
+
+  .mf-how__step:last-child {
+    border-radius: 0 0 4px 4px;
+  }
+
+  .mf-case {
+    height: auto;
+    min-height: 328px;
+  }
+
+  .mf-case__panel {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 0 0 12px 12px;
+  }
+
+  .mf-case__bg {
+    display: none;
+  }
+}

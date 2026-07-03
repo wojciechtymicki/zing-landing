@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zing Character POC</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0c0911;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══════════════════════════════════════════════════════════════
+     ZING CHARACTER EMBED
+     Copy everything between these comments into a Webflow HTML embed.
+     Update the video src to your Webflow asset URL before publishing.
+     ══════════════════════════════════════════════════════════════ -->
+
+  <style>
+    .zing-wrap {
+      position: relative;
+      width: 100%;
+      height: 800px;
+      overflow: hidden;
+    }
+
+    /* Each parallax layer covers the full canvas */
+    .p-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      will-change: transform;
+      transition: transform 0.55s cubic-bezier(0.34, 1.05, 0.64, 1);
+    }
+
+    .p-layer.no-transition {
+      transition: none;
+    }
+
+    /* Inner canvas at Figma's native 1750 px, scaled to 500 px.
+       Centred horizontally in whatever width the container is.
+       All child positions use Figma pixel coordinates directly. */
+    .p-inner {
+      position: absolute;
+      left: calc(50% - 250px);
+      top: 150px;
+      width: 1750px;
+      height: 1750px;
+      transform-origin: top left;
+      transform: scale(0.285714286); /* 500 / 1750 */
+    }
+
+    /* ── VIDEO ───────────────────────────────────────────────────── */
+    .z-video-clip {
+      position: absolute;
+      left: 228px;
+      top: 227.5px;
+      width: 1295px;
+      height: 1295px;
+      border-radius: 50%;
+      overflow: hidden;
+      filter: blur(12px);
+    }
+
+    .z-video-clip video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── BODY ────────────────────────────────────────────────────── */
+    .z-body-img {
+      position: absolute;
+      left: 199px;
+      top: 190px;
+      width: 1355px;
+      height: 1371px;
+      display: block;
+    }
+
+    /* ── FACE PATTERN ────────────────────────────────────────────── */
+    .z-face-img {
+      position: absolute;
+      left: 199px;
+      top: 190px;
+      width: 1355px;
+      height: 1371px;
+      display: block;
+    }
+
+    /* ── EYES ────────────────────────────────────────────────────── */
+    .z-eye {
+      position: absolute;
+      width: 159.4px;
+      height: 254.508px;
+      transition: transform 0.08s ease-out;
+    }
+
+    .z-eye-l {
+      left: 677.4px;
+      top: 654.9px;
+    }
+
+    .z-eye-r {
+      left: 915.2px;
+      top: 654.9px;
+    }
+
+    .z-eye-pill {
+      width: 100%;
+      height: 100%;
+      border-radius: 181.624px;
+      background: #fff;
+      box-shadow: 0 0 15px 17px #fff;
+      transform-origin: center center;
+    }
+
+    @keyframes z-blink {
+      0%, 100% { transform: scaleY(1); }
+      50%       { transform: scaleY(0.06); }
+    }
+
+    .z-eye-pill.blinking {
+      animation: z-blink 0.08s ease-in-out;
+    }
+
+    /* ── HANDS ───────────────────────────────────────────────────── */
+    .z-hand-l-img {
+      position: absolute;
+      left: -87.9px;
+      top: 1031.6px;
+      width: 410px;
+      height: 410px;
+      display: block;
+    }
+
+    .z-hand-r-img {
+      position: absolute;
+      left: 1401.1px;
+      top: 1086.6px;
+      width: 410px;
+      height: 410px;
+      display: block;
+    }
+  </style>
+
+  <div class="zing-wrap" id="zingScene">
+
+    <!-- Z-order back → front: handL, handR, video, body, face, eyes -->
+
+    <!-- Layer 1: Hand left -->
+    <div class="p-layer" id="zLayerHandL" style="z-index:1">
+      <div class="p-inner">
+        <img class="z-hand-l-img" src="assets/character/hand left.png" alt="">
+      </div>
+    </div>
+
+    <!-- Layer 2: Hand right -->
+    <div class="p-layer" id="zLayerHandR" style="z-index:2">
+      <div class="p-inner">
+        <img class="z-hand-r-img" src="assets/character/hand right.png" alt="">
+      </div>
+    </div>
+
+    <!-- Layer 3: Video orb -->
+    <div class="p-layer" id="zLayerVideo" style="z-index:3">
+      <div class="p-inner">
+        <div class="z-video-clip">
+          <video autoplay loop muted playsinline>
+            <source src="assets/character/orb.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <!-- Layer 4: Body -->
+    <div class="p-layer" id="zLayerBody" style="z-index:4">
+      <div class="p-inner">
+        <img class="z-body-img" src="assets/character/body.png" alt="">
+      </div>
+    </div>
+
+    <!-- Layer 5: Face pattern -->
+    <div class="p-layer" id="zLayerFace" style="z-index:5">
+      <div class="p-inner">
+        <img class="z-face-img" src="assets/character/face pattern.png" alt="">
+      </div>
+    </div>
+
+    <!-- Layer 6: Eyes -->
+    <div class="p-layer" id="zLayerEyes" style="z-index:6">
+      <div class="p-inner">
+        <div class="z-eye z-eye-l" id="zEyeL">
+          <div class="z-eye-pill" id="zEyeLPill"></div>
+        </div>
+        <div class="z-eye z-eye-r" id="zEyeR">
+          <div class="z-eye-pill" id="zEyeRPill"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // ══════════════════════════════════════════════════════════════════
+    //  ZING CHARACTER — PARALLAX CONFIG
+    //
+    //  All x/y values are in output-space pixels at the 800px reference size.
+    //  They scale automatically with the canvas. Positive x → right, y → down.
+    // ══════════════════════════════════════════════════════════════════
+    const LAYERS = {
+      video: { x:  3, y:  3 },
+      body:  { x:  6, y:  5 },
+      face:  { x:  7, y:  6 },
+      eyes:  { x: 30, y: 30 },
+      handL: { x: 14, y: 10 },
+      handR: { x: 14, y: 10 },
+    };
+
+    // Max eye-follow travel at the 800px reference size
+    const EYE_MAX = 14;
+
+    // ── PRESET STATES (for Webflow interactions) ─────────────────────
+    const STATES = {
+      rest:   [ 0,  0],
+      top:    [ 0, -1],
+      bottom: [ 0,  1],
+      left:   [-1,  0],
+      right:  [ 1,  0],
+    };
+
+    // ── DOM ──────────────────────────────────────────────────────────
+    const scene = document.getElementById('zingScene');
+    const L = {
+      video: document.getElementById('zLayerVideo'),
+      body:  document.getElementById('zLayerBody'),
+      face:  document.getElementById('zLayerFace'),
+      eyes:  document.getElementById('zLayerEyes'),
+      handL: document.getElementById('zLayerHandL'),
+      handR: document.getElementById('zLayerHandR'),
+    };
+    const eyeL = document.getElementById('zEyeL');
+    const eyeR = document.getElementById('zEyeR');
+
+    const SCALE = 500 / 1750; // output → inner coordinate conversion
+
+    let eox = 0, eoy = 0;
+
+    // ── PARALLAX ─────────────────────────────────────────────────────
+    function applyParallax(nx, ny) {
+      const t = (el, cfg) =>
+        (el.style.transform = `translate(${nx * cfg.x}px, ${ny * cfg.y}px)`);
+
+      t(L.video, LAYERS.video);
+      t(L.body,  LAYERS.body);
+      t(L.face,  LAYERS.face);
+      t(L.handL, LAYERS.handL);
+      t(L.handR, LAYERS.handR);
+
+      L.eyes.style.transform = `translate(${nx * LAYERS.eyes.x}px, ${ny * LAYERS.eyes.y}px)`;
+      eyeL.style.transform = `translate(${eox}px, ${eoy}px)`;
+      eyeR.style.transform = `translate(${eox}px, ${eoy}px)`;
+    }
+
+    // ── EYE FOLLOW ───────────────────────────────────────────────────
+    function updateEyeFollow(mx, my) {
+      const dx   = mx - 400;
+      const dy   = my - 400;
+      const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+      const t    = Math.min(dist, 400) / 400;
+      eox = (dx / dist) * EYE_MAX * t / SCALE;
+      eoy = (dy / dist) * EYE_MAX * t / SCALE;
+      eyeL.style.transform = `translate(${eox}px, ${eoy}px)`;
+      eyeR.style.transform = `translate(${eox}px, ${eoy}px)`;
+    }
+
+    // ── BLINK ─────────────────────────────────────────────────────────
+    function blink() {
+      ['zEyeLPill', 'zEyeRPill'].forEach(id => {
+        const el = document.getElementById(id);
+        el.classList.remove('blinking');
+        void el.offsetWidth;
+        el.classList.add('blinking');
+        el.addEventListener('animationend', () => el.classList.remove('blinking'), { once: true });
+      });
+    }
+
+    // ── MOUSE ────────────────────────────────────────────────────────
+    scene.addEventListener('mousemove', e => {
+      const r  = scene.getBoundingClientRect();
+      const mx = e.clientX - r.left;
+      const my = e.clientY - r.top;
+
+      Object.values(L).forEach(el => el.classList.add('no-transition'));
+      updateEyeFollow(mx, my);
+      applyParallax((mx - 400) / 400, (my - 400) / 400);
+    });
+
+    scene.addEventListener('mouseleave', () => {
+      Object.values(L).forEach(el => el.classList.remove('no-transition'));
+      eox = 0; eoy = 0;
+      applyParallax(0, 0);
+      eyeL.style.transform = 'translate(0,0)';
+      eyeR.style.transform = 'translate(0,0)';
+    });
+
+    scene.addEventListener('click', blink);
+
+    // ── STATE API ─────────────────────────────────────────────────────
+    window.zingSetState = function(stateName) {
+      const s = STATES[stateName] || STATES.rest;
+      Object.values(L).forEach(el => el.classList.remove('no-transition'));
+      applyParallax(s[0], s[1]);
+    };
+
+    applyParallax(0, 0);
+  </script>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+
+</body>
+
+</html>

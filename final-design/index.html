@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zing — Grow GGR with AI</title>
+  <link rel="stylesheet" href="../design-system/tokens.css">
+  <link rel="stylesheet" href="../design-system/typography.css">
+  <style>
+    /* ── Reset ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--color-purple-950);
+      color: var(--color-white);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+    }
+
+    /* ── Info Banner ────────────────────────────────────────── */
+    .info-banner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 8px 4px;
+      background: var(--color-surface-powder-04);
+      border-bottom: 1px solid var(--color-surface-powder-10);
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      color: #f6f1ff;
+      letter-spacing: var(--tracking-button);
+      line-height: var(--line-height-button);
+      white-space: nowrap;
+    }
+    .info-banner a {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: inherit;
+      text-decoration: none;
+    }
+    .info-banner a:hover { text-decoration: underline; }
+    .info-banner .arrow-icon {
+      width: 16px; height: 16px;
+      display: inline-flex;
+    }
+    .info-banner .arrow-icon img { width: 100%; height: 100%; }
+
+    /* ── Main Nav ───────────────────────────────────────────── */
+    .top-bar {
+      position: relative;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .main-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 70px;
+      height: 64px;
+    }
+    .nav-logo {
+      width: 120px;
+      flex-shrink: 0;
+    }
+    .nav-logo img {
+      height: 31px;
+      width: 67px;
+      object-fit: contain;
+      object-position: left center;
+    }
+
+    /* pill */
+    .nav-pill {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 12px 24px;
+      background: var(--color-surface-powder-04);
+      border: 1px solid var(--color-surface-powder-10);
+      border-radius: var(--radius-full);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .nav-item {
+      position: relative;
+    }
+    .nav-trigger {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-body);
+      font-size: var(--font-size-nav);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-powder-neutral-500);
+      letter-spacing: var(--tracking-nav);
+      line-height: var(--line-height-nav);
+      background: none;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      padding: 0;
+      transition: color 0.15s ease;
+    }
+    .nav-trigger:hover { color: var(--color-white); }
+    /* Open state: trigger lights up */
+    .nav-item.open > .nav-trigger { color: var(--color-white); }
+    .nav-trigger .nav-chevron {
+      width: 10px; height: 10px;
+      opacity: 0.5; flex-shrink: 0;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    .nav-item.open > .nav-trigger .nav-chevron {
+      transform: rotate(180deg);
+      opacity: 0.9;
+    }
+    .info-banner .arrow-icon { width: 12px; height: 12px; display: inline-flex; }
+    .info-banner .arrow-icon img { width: 100%; height: 100%; }
+    .nav-sep {
+      width: 1px;
+      height: 16px;
+      background: var(--color-surface-powder-10);
+    }
+    .nav-lang {
+      font-family: var(--font-body);
+      font-size: var(--font-size-nav);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-powder-neutral-500);
+      letter-spacing: var(--tracking-nav);
+      cursor: pointer;
+      transition: color 0.15s ease;
+    }
+    .nav-lang:hover { color: var(--color-white); }
+
+    /* Book Demo */
+    .nav-right {
+      width: 120px;
+      display: flex;
+      justify-content: flex-end;
+    }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 17px;
+      border: 1px solid var(--color-surface-powder-40);
+      border-radius: var(--radius-pill);
+      font-family: var(--font-body);
+      font-size: var(--font-size-button);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-white);
+      letter-spacing: var(--tracking-button);
+      line-height: var(--line-height-button);
+      text-decoration: none;
+      white-space: nowrap;
+      cursor: pointer;
+      background: transparent;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .btn-outline:hover {
+      background: var(--color-surface-powder-08);
+    }
+
+    /* ── Dropdown panels ─────────────────────────────────────── */
+    .nav-dropdown {
+      position: absolute;
+      top: calc(100% + 12px);
+      left: 50%;
+      min-width: 280px;
+      /* closed: invisible + shifted up */
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-50%) translateY(-8px);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+    /* Left-anchored dropdowns */
+    .nav-item--solution .nav-dropdown    { left: 0; width: 780px; transform: translateY(-8px); }
+    .nav-item--case-studies .nav-dropdown{ left: 0; width: 600px; transform: translateY(-8px); }
+    /* Right-anchored language picker */
+    .nav-item--lang .nav-dropdown        { left: auto; right: 0; width: 180px; transform: translateY(-8px); }
+
+    /* Open state: fade in + slide down to resting position */
+    .nav-item.open .nav-dropdown {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+    .nav-item--solution.open .nav-dropdown,
+    .nav-item--case-studies.open .nav-dropdown,
+    .nav-item--lang.open .nav-dropdown { transform: translateY(0); }
+
+    /* Solution dropdown */
+    .dropdown-solutions {
+      background: rgba(10, 7, 15, 0.90);
+      border: 1px solid rgba(222, 199, 255, 0.08);
+      border-radius: var(--radius-lg);
+      display: flex;
+      gap: 16px;
+      padding: 8px;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+    }
+    .dropdown-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .dropdown-col-label {
+      padding: 16px 16px 0;
+      font-size: var(--font-size-overhead);
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--tracking-overhead);
+      text-transform: uppercase;
+      color: var(--color-white);
+    }
+    .dropdown-items {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .dropdown-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: background 0.12s ease;
+      text-decoration: none;
+    }
+    .dropdown-item:hover {
+      background: var(--color-surface-powder-04);
+    }
+    .dropdown-item-title {
+      font-size: var(--font-size-h5);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-white);
+      line-height: var(--line-height-h5);
+      letter-spacing: var(--tracking-h5);
+    }
+    .dropdown-item-desc {
+      font-size: 12px;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-powder-neutral-500);
+      line-height: 1.3;
+      letter-spacing: var(--tracking-body-xs);
+    }
+
+    /* Case studies dropdown */
+    .dropdown-case-studies {
+      background: rgba(10, 7, 15, 0.90);
+      border: 1px solid rgba(222, 199, 255, 0.08);
+      border-radius: var(--radius-lg);
+      display: flex;
+      gap: 32px;
+      padding: 8px;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+    }
+    .dropdown-case-card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      transition: background 0.12s ease;
+    }
+    .dropdown-case-card:first-child {
+      background: var(--color-surface-powder-02);
+    }
+    .dropdown-case-card:hover { background: var(--color-surface-powder-08); }
+    .dropdown-case-card-title {
+      font-size: var(--font-size-overhead);
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--tracking-overhead);
+      text-transform: uppercase;
+      color: var(--color-white);
+      margin-bottom: 19px;
+    }
+    .dropdown-case-card-desc {
+      font-size: 12px;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-powder-neutral-500);
+      line-height: 1.3;
+      letter-spacing: var(--tracking-body-xs);
+    }
+    .dropdown-case-card-arrow img { width: 16px; height: 16px; }
+
+    /* Language dropdown */
+    .dropdown-lang {
+      background: rgba(10, 7, 15, 0.90);
+      border: 1px solid rgba(222, 199, 255, 0.08);
+      border-radius: var(--radius-lg);
+      padding: 8px;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+    }
+    .dropdown-lang-items { display: flex; flex-direction: column; gap: 4px; }
+    .dropdown-lang-item {
+      display: block;
+      padding: 12px 16px;
+      font-size: var(--font-size-h5);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-white);
+      line-height: var(--line-height-h5);
+      letter-spacing: var(--tracking-h5);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.12s ease;
+    }
+    .dropdown-lang-item.active,
+    .dropdown-lang-item:hover { background: var(--color-surface-powder-04); }
+
+    /* ── Hero ───────────────────────────────────────────────── */
+    .hero-wrapper {
+      position: relative;
+      isolation: isolate;
+    }
+    .unicorn-scene {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 0;
+      width: min(1300px, 100%);
+      height: 1229px;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .hero {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 60px;
+      padding-bottom: 32px;
+    }
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      gap: 163px;
+      align-items: center;
+      width: 680px;
+    }
+    .hero-top {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: center;
+      width: 100%;
+    }
+    .hero-icon {
+      width: 99px;
+      height: 99px;
+      object-fit: cover;
+    }
+    .hero-text-group {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      align-items: center;
+      width: 100%;
+      text-align: center;
+    }
+    .hero-headlines {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+    .hero-h1 {
+      font-family: var(--font-body);
+      font-size: var(--font-size-hero);
+      font-weight: var(--font-weight-medium);
+      line-height: var(--line-height-hero);
+      letter-spacing: var(--tracking-hero);
+      background-image: url('https://www.figma.com/api/mcp/asset/ea984944-af01-45af-baa3-c7371bf6a906');
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      width: 100%;
+    }
+    .hero-sub {
+      font-family: var(--font-body);
+      font-size: 28px;
+      font-weight: var(--font-weight-medium);
+      line-height: 1.15;
+      letter-spacing: -0.8px;
+      color: rgba(255, 255, 255, 0.8);
+      width: 100%;
+    }
+    .hero-body {
+      font-family: var(--font-body);
+      font-size: var(--font-size-body-m);
+      font-weight: var(--font-weight-medium);
+      line-height: var(--line-height-body-m);
+      letter-spacing: var(--tracking-body-m);
+      color: var(--color-white);
+      width: 524px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 34px;
+      padding: 8px 16px;
+      background: var(--color-white);
+      border-radius: var(--radius-pill);
+      font-family: var(--font-body);
+      font-size: var(--font-size-button);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-black);
+      letter-spacing: var(--tracking-button);
+      line-height: var(--line-height-button);
+      text-decoration: none;
+      white-space: nowrap;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.15s ease;
+    }
+    .btn-primary:hover { opacity: 0.88; }
+
+    /* Stats */
+    .hero-stats {
+      display: flex;
+      gap: 46px;
+      align-items: center;
+      text-align: center;
+      color: var(--color-white);
+    }
+    .stat-num {
+      font-family: var(--font-body);
+      font-size: 38px;
+      font-weight: var(--font-weight-medium);
+      line-height: 1.14;
+      letter-spacing: -0.84px;
+    }
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: var(--font-size-overhead);
+      font-weight: var(--font-weight-medium);
+      line-height: var(--line-height-overhead);
+      letter-spacing: -0.1px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* ── Logos section ─────────────────────────────────────── */
+    .logos-section {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background: rgba(6, 5, 6, 0.9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 64px;
+      padding-bottom: 0;
+    }
+    .logos-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+      align-items: center;
+      padding-top: 64px;
+      width: 100%;
+      max-width: 1300px;
+      padding-left: 70px;
+      padding-right: 70px;
+    }
+
+    /* Section header inside logos section */
+    .section-header-block {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      align-items: center;
+      width: 600px;
+      text-align: center;
+    }
+    .section-header-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+      width: 100%;
+    }
+    .pill-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 8px;
+      border: 1px solid rgba(222, 199, 255, 0.1);
+      border-radius: 6px;
+      font-family: var(--font-body);
+      font-size: var(--font-size-overhead);
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--tracking-overhead);
+      text-transform: uppercase;
+      color: var(--color-powder-500);
+      white-space: nowrap;
+    }
+    .section-h2-gradient {
+      font-family: var(--font-body);
+      font-size: var(--font-size-h2);
+      font-weight: var(--font-weight-medium);
+      line-height: var(--line-height-h2);
+      letter-spacing: var(--tracking-h2);
+      background: linear-gradient(-90deg, #ffffff 0%, #dec7ff 102%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      text-align: center;
+      width: 100%;
+    }
+
+    /* Trusted label + logo band */
+    .logos-band-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 257px; /* matches Figma height of 257 container */
+      align-items: center;
+      width: 100%;
+    }
+    .trusted-label {
+      font-family: var(--font-mono);
+      font-size: var(--font-size-overhead);
+      font-weight: var(--font-weight-medium);
+      line-height: var(--line-height-overhead);
+      letter-spacing: -0.1px;
+      text-transform: uppercase;
+      color: #e3cde9;
+      text-align: center;
+    }
+    .logo-band {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px 48px;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+    .logo-band img {
+      display: block;
+      flex-shrink: 0;
+      /* render at natural SVG dimensions — viewBox defines exact px size */
+      width: auto;
+      height: auto;
+      opacity: 0.85;
+    }
+
+    /* Divider line */
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--color-surface-powder-08), transparent);
+      margin-top: auto;
+    }
+
+    /* ── Overlay for closing dropdowns ─────────────────────── */
+    .nav-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+    }
+    .nav-overlay.active { display: block; }
+  </style>
+</head>
+<body>
+
+<div class="nav-overlay" id="navOverlay"></div>
+
+<!-- ═══════════════ TOP BAR ═══════════════ -->
+<div class="top-bar">
+
+  <!-- Info Banner -->
+  <div class="info-banner">
+    <span>Meet us at iGB L!VE</span>
+    <span>1–2 July</span>
+    <a href="#">
+      Book meeting
+      <span class="arrow-icon">
+        <img src="https://www.figma.com/api/mcp/asset/73aad529-0004-40d8-aac5-393938efbd2c" alt="">
+      </span>
+    </a>
+  </div>
+
+  <!-- Main Nav -->
+  <nav class="main-nav" aria-label="Main navigation">
+
+    <!-- Logo -->
+    <div class="nav-logo">
+      <a href="/"><img src="https://www.figma.com/api/mcp/asset/2ba9eb30-9aec-4f6d-ace0-b05dcfacd907" alt="Zing"></a>
+    </div>
+
+    <!-- Nav pill -->
+    <div class="nav-pill">
+
+      <!-- Solution -->
+      <div class="nav-item nav-item--solution" id="navSolution">
+        <button class="nav-trigger" aria-haspopup="true" aria-expanded="false">
+          Solution
+          <img class="nav-chevron" src="https://www.figma.com/api/mcp/asset/3cbfd2aa-e233-4156-a2f0-6ee9c1eac9c4" alt="">
+        </button>
+        <div class="nav-dropdown" role="region">
+          <div class="dropdown-solutions">
+            <!-- Casino -->
+            <div class="dropdown-col">
+              <div class="dropdown-col-label">Casino</div>
+              <div class="dropdown-items">
+                <a href="#" class="dropdown-item">
+                  <span class="dropdown-item-title">Smart game collections</span>
+                  <span class="dropdown-item-desc">Personalized sections for every player.</span>
+                </a>
+                <a href="#" class="dropdown-item">
+                  <span class="dropdown-item-title">Profit optimization engine</span>
+                  <span class="dropdown-item-desc">Maximize margin from recommendations.</span>
+                </a>
+                <a href="#" class="dropdown-item">
+                  <span class="dropdown-item-title">Provider GGR balancer</span>
+                  <span class="dropdown-item-desc">Balance traffic across providers.</span>
+                </a>
+                <a href="#" class="dropdown-item">
+                  <span class="dropdown-item-title">First Session personalization</span>
+                  <span class="dropdown-item-desc">Personalize from the first click.</span>
+                </a>
+                <a href="#" class="dropdown-item">
+                  <span class="dropdown-item-title">Churn &amp; VIP Detection</span>
+                  <span class="dropdown-item-desc">Detect valuable players early.</span>
+                </a>
+                <a href="#" class="dropdown-item">
+                  <span class="dropdown-item-title">Personalized Retention Flows</span>
+                  <span class="dropdown-item-desc">Improve retention with personalization.</span>
+                </a>
+              </div>
+            </div>
+            <!-- What's inside -->
+            <div class="dropdown-col">
+              <div class="dropdown-col-label">What's inside:</div>
+              <div class="dropdown-items">
+                <a href="#" class="dropdown-item">
+                  <span class="dropdown-item-title">A/B Testing Tool</span>
+                  <span class="dropdown-item-desc">Measure recommendation performance easily.</span>
+                </a>
+                <a href="#" class="dropdown-item">
+                  <span class="dropdown-item-title">Backoffice</span>
+                  <span class="dropdown-item-desc">Manage recommendations and analytics.</span>
+                </a>
+                <a href="#" class="dropdown-item">
+                  <span class="dropdown-item-title">Player preferences</span>
+                  <span class="dropdown-item-desc">Understand player behavior deeply.</span>
+                </a>
+                <a href="#" class="dropdown-item">
+                  <span class="dropdown-item-title">Metrics &amp; Analytics</span>
+                  <span class="dropdown-item-desc">Track uplift and engagement.</span>
+                </a>
+              </div>
+            </div>
+            <!-- Sportsbook -->
+            <div class="dropdown-col">
+              <div class="dropdown-col-label">Sportsbook</div>
+              <div class="dropdown-items">
+                <a href="#" class="dropdown-item">
+                  <span class="dropdown-item-title">Sports Events recommendations</span>
+                  <span class="dropdown-item-desc">Recommend relevant sports events.</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case Studies -->
+      <div class="nav-item nav-item--case-studies" id="navCaseStudies">
+        <button class="nav-trigger" aria-haspopup="true" aria-expanded="false">
+          Case studies
+          <img class="nav-chevron" src="https://www.figma.com/api/mcp/asset/3cbfd2aa-e233-4156-a2f0-6ee9c1eac9c4" alt="">
+        </button>
+        <div class="nav-dropdown" role="region">
+          <div class="dropdown-case-studies">
+            <a href="#" class="dropdown-case-card">
+              <div>
+                <div class="dropdown-case-card-title">Entain</div>
+                <div class="dropdown-case-card-desc">Personalized lobbies increased player engagement and boosted GGR from first sessions.</div>
+              </div>
+              <div class="dropdown-case-card-arrow"><img src="https://www.figma.com/api/mcp/asset/cf29e057-8583-4330-8b8c-989640e84a60" alt="↗"></div>
+            </a>
+            <a href="#" class="dropdown-case-card">
+              <div>
+                <div class="dropdown-case-card-title">Hondubet</div>
+                <div class="dropdown-case-card-desc">Automated recommendations increased turnover and reduced manual lobby management time.</div>
+              </div>
+              <div class="dropdown-case-card-arrow"><img src="https://www.figma.com/api/mcp/asset/cf29e057-8583-4330-8b8c-989640e84a60" alt="↗"></div>
+            </a>
+            <a href="#" class="dropdown-case-card">
+              <div>
+                <div class="dropdown-case-card-title">Catcasino</div>
+                <div class="dropdown-case-card-desc">Dynamic game collections improved retention and boosted visibility of promoted games.</div>
+              </div>
+              <div class="dropdown-case-card-arrow"><img src="https://www.figma.com/api/mcp/asset/cf29e057-8583-4330-8b8c-989640e84a60" alt="↗"></div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- About us -->
+      <a href="#" class="nav-trigger" style="text-decoration:none;">About us</a>
+
+      <!-- Separator -->
+      <div class="nav-sep" aria-hidden="true"></div>
+
+      <!-- Language -->
+      <div class="nav-item nav-item--lang" id="navLang">
+        <button class="nav-trigger nav-lang" aria-haspopup="true" aria-expanded="false">Eng</button>
+        <div class="nav-dropdown" role="region">
+          <div class="dropdown-lang">
+            <div class="dropdown-lang-items">
+              <a href="#" class="dropdown-lang-item active">English</a>
+              <a href="#" class="dropdown-lang-item">Spanish</a>
+              <a href="#" class="dropdown-lang-item">Portuguese</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /nav-pill -->
+
+    <!-- Book Demo -->
+    <div class="nav-right">
+      <a href="#" class="btn-outline">Book Demo</a>
+    </div>
+
+  </nav>
+</div><!-- /top-bar -->
+
+<!-- ═══════════════ HERO + UNICORN ═══════════════ -->
+<div class="hero-wrapper">
+
+  <!-- Unicorn Studio WebGL background -->
+  <div class="unicorn-scene"
+       data-us-project="V7Q7JWAednRJ3m6YHkIG"
+       style="width: 1300px; height: 1229px;">
+  </div>
+
+  <!-- Hero content -->
+  <section class="hero">
+    <div class="hero-content">
+
+      <!-- Headline block -->
+      <div class="hero-top">
+        <img class="hero-icon"
+             src="https://www.figma.com/api/mcp/asset/e3537250-309c-4b22-8b94-22fcf9547e56"
+             alt="">
+        <div class="hero-text-group">
+          <div class="hero-headlines">
+            <h1 class="hero-h1">Grow GGR with AI</h1>
+            <p class="hero-sub">Personalization you can control and measure</p>
+          </div>
+          <p class="hero-body">
+            Take control of your player experience — deliver AI-powered recommendations,
+            measure every uplift with A/B testing, and grow GGR
+          </p>
+          <a href="#" class="btn-primary">Book Demo</a>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">60</div>
+          <div class="stat-label">Brands live</div>
+        </div>
+        <div>
+          <div class="stat-num">12M</div>
+          <div class="stat-label">Players analyzed</div>
+        </div>
+        <div>
+          <div class="stat-num">70B</div>
+          <div class="stat-label">Bets analyzed</div>
+        </div>
+        <div>
+          <div class="stat-num">GDPR</div>
+          <div class="stat-label">Compliant ISO 27001</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- /hero-wrapper -->
+
+<!-- ═══════════════ LOGOS + SECTION HEADER ═══════════════ -->
+<section class="logos-section">
+  <div class="logos-inner">
+
+    <!-- Trusted logos -->
+    <div style="display:flex; flex-direction:column; align-items:center; gap:40px; width:100%;">
+      <p class="trusted-label">Trusted by industry standards</p>
+      <div class="logo-band">
+        <img src="assets/entain.svg"   alt="Entain">
+        <img src="assets/10bet.svg"    alt="20Bet">
+        <img src="assets/national.svg" alt="National Casino">
+        <img src="assets/cat.svg"      alt="CatCasino">
+        <img src="assets/hell.svg"     alt="HellSpin">
+        <img src="assets/r7.svg"       alt="R7">
+        <img src="assets/slint.svg"    alt="Slotier">
+        <img src="assets/arkada.svg"   alt="Arkada">
+        <img src="assets/tonybet.svg"  alt="Tonybet">
+        <img src="assets/adwa.svg"     alt="Adwa">
+        <img src="assets/onlywin.svg"  alt="OnlyWin">
+        <img src="assets/hondubet.svg" alt="Hondubet">
+        <img src="assets/aviatrix.svg" alt="Aviatrix">
+      </div>
+    </div>
+
+    <!-- "One AI Layer..." section header — below logos -->
+    <div class="section-header-block">
+      <div class="section-header-inner">
+        <span class="pill-tag">Built to Personalize, Optimize, and Grow</span>
+        <h2 class="section-h2-gradient">One AI Layer Between Your Players, Lobby and Business Goals</h2>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-divider"></div>
+</section>
+
+<!-- ═══════════════ SCRIPTS ═══════════════ -->
+
+<!-- Unicorn Studio -->
+<script>
+  !function(){
+    var u=window.UnicornStudio;
+    if(u&&u.init){
+      if(document.readyState==="loading"){
+        document.addEventListener("DOMContentLoaded",function(){u.init()})
+      } else { u.init() }
+    } else {
+      window.UnicornStudio={isInitialized:!1};
+      var i=document.createElement("script");
+      i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.2.1/dist/unicornStudio.umd.js";
+      i.onload=function(){
+        if(document.readyState==="loading"){
+          document.addEventListener("DOMContentLoaded",function(){UnicornStudio.init()})
+        } else { UnicornStudio.init() }
+      };
+      (document.head||document.body).appendChild(i)
+    }
+  }();
+</script>
+
+<!-- Nav dropdowns -->
+<script>
+  (function () {
+    const navItems = Array.from(document.querySelectorAll('.nav-item'));
+    let closeTimer = null;
+
+    function openItem(item) {
+      clearTimeout(closeTimer);
+      // Instant switch: close siblings, open this one
+      navItems.forEach(el => {
+        if (el !== item) {
+          el.classList.remove('open');
+          const b = el.querySelector('.nav-trigger');
+          if (b) b.setAttribute('aria-expanded', 'false');
+        }
+      });
+      item.classList.add('open');
+      const btn = item.querySelector('.nav-trigger');
+      if (btn) btn.setAttribute('aria-expanded', 'true');
+    }
+
+    function scheduleClose() {
+      clearTimeout(closeTimer);
+      // Small grace period — lets the cursor move from trigger into the panel
+      closeTimer = setTimeout(closeAll, 120);
+    }
+
+    function closeAll() {
+      navItems.forEach(el => {
+        el.classList.remove('open');
+        const b = el.querySelector('.nav-trigger');
+        if (b) b.setAttribute('aria-expanded', 'false');
+      });
+    }
+
+    navItems.forEach(item => {
+      item.addEventListener('mouseenter', () => openItem(item));
+      item.addEventListener('mouseleave', scheduleClose);
+    });
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAll(); });
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,600 @@
+/*
+  Hero section styles
+  Scope: layout & visuals specific to the hero (banner, nav, headline,
+  stats, rolling band, video modal button + modal).
+*/
+
+/* ---------------------------------------------------------- */
+/* Section shell                                               */
+/* ---------------------------------------------------------- */
+.hero {
+  position: relative;
+  background: var(--color-zinc-950);
+}
+
+/* ---------------------------------------------------------- */
+/* Info banner (top strip)                                     */
+/* ---------------------------------------------------------- */
+.info-banner {
+  padding: 8px;
+}
+
+.info-banner__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 8px;
+  background: var(--color-zinc-900);
+  border-radius: 8px;
+}
+
+.info-banner__title {
+  color: var(--color-white);
+  text-align: center;
+}
+
+.info-banner__date {
+  color: var(--color-zinc-400);
+  text-align: center;
+}
+
+.info-banner__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  border: 1px solid var(--color-zinc-500);
+  border-radius: 32px;
+  color: var(--color-zinc-500);
+  transition: color 150ms ease, border-color 150ms ease;
+}
+
+.info-banner__cta:hover {
+  color: var(--color-zinc-100);
+  border-color: var(--color-zinc-100);
+}
+
+/* ---------------------------------------------------------- */
+/* Full-screen hero content (100vh)                            */
+/* ---------------------------------------------------------- */
+.hero-content {
+  position: relative;
+  min-height: 100vh;
+  padding: 32px 62px 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ---------------------------------------------------------- */
+/* Main nav                                                    */
+/* ---------------------------------------------------------- */
+.main-nav {
+  position: relative;
+  width: 100%;
+  max-width: 860px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 16px;
+  background: var(--color-zinc-900);
+  border-radius: 16px;
+  /* allow dropdowns to overflow without clipping */
+  overflow: visible;
+}
+
+.main-nav__logo {
+  height: 31px;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.main-nav__divider {
+  width: 1px;
+  height: 34px;
+  background: var(--color-zinc-700);
+  flex-shrink: 0;
+}
+
+.main-nav__center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.main-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.main-nav__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-white);
+  text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 150ms ease;
+}
+
+.main-nav__link:hover {
+  opacity: 0.75;
+}
+
+.main-nav__chevron {
+  width: 17px;
+  height: 17px;
+  transition: transform 220ms ease;
+}
+
+/* Rotate chevron when nav item is open */
+.nav-item[data-open="true"] .main-nav__chevron {
+  transform: rotate(180deg);
+}
+
+/* ---------------------------------------------------------- */
+/* Nav item wrapper (hosts dropdown)                          */
+/* No position:relative here — dropdown anchors to .main-nav  */
+/* ---------------------------------------------------------- */
+.nav-item {
+  position: static;
+}
+
+/* ---------------------------------------------------------- */
+/* Dropdown panel                                             */
+/* ---------------------------------------------------------- */
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 12px); /* below the nav pill */
+  left: 0;
+  transform: translateY(-8px);
+  width: 100%; /* matches main-nav width */
+  padding: 32px;
+  background: var(--color-zinc-900);
+  border-radius: 16px;
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  z-index: 50;
+
+  /* closed state */
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease,
+    visibility 0ms linear 220ms;
+}
+
+.nav-dropdown[data-open="true"] {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  visibility: visible;
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease,
+    visibility 0ms linear 0ms;
+}
+
+/* ---------------------------------------------------------- */
+/* Dropdown columns                                           */
+/* ---------------------------------------------------------- */
+.nav-dropdown__col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.nav-dropdown__col-heading {
+  margin: 0;
+  color: var(--color-white);
+  line-height: 1.2;
+}
+
+/* ---------------------------------------------------------- */
+/* Solution dropdown — item list                              */
+/* ---------------------------------------------------------- */
+.nav-dropdown__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nav-dropdown__item {
+  /* no additional style needed */
+}
+
+.nav-dropdown__link {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  transition: opacity 150ms ease;
+}
+
+.nav-dropdown__link:hover {
+  opacity: 0.75;
+}
+
+.nav-dropdown__link-title {
+  color: var(--color-white);
+  line-height: 1.6;
+}
+
+.nav-dropdown__link-desc {
+  color: var(--color-zinc-500);
+  font-size: var(--font-size-11);
+  line-height: 1.2;
+  letter-spacing: 0; /* override .type-overhead uppercase/tracking in desc */
+  text-transform: none;
+}
+
+/* ---------------------------------------------------------- */
+/* Case studies dropdown — case cards                         */
+/* ---------------------------------------------------------- */
+.nav-dropdown__case {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  text-decoration: none;
+  color: var(--color-white);
+  transition: opacity 150ms ease;
+}
+
+.nav-dropdown__case:hover {
+  opacity: 0.75;
+}
+
+.nav-dropdown__case-desc {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-13);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.15px;
+  color: var(--color-white);
+}
+
+.nav-dropdown__arrow {
+  color: var(--color-white);
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------- */
+/* Primary button (pill)                                       */
+/* ---------------------------------------------------------- */
+.button-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  min-width: 115px;
+  padding: 8px 16px;
+  background: var(--color-zinc-100);
+  color: var(--color-black);
+  border-radius: 32px;
+  text-decoration: none;
+  transition: background 150ms ease, transform 150ms ease;
+}
+
+.button-primary:hover {
+  background: var(--color-white);
+  transform: translateY(-1px);
+}
+
+/* ---------------------------------------------------------- */
+/* Headline block                                              */
+/* ---------------------------------------------------------- */
+.hero-headline {
+  margin: auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 860px;
+  text-align: center;
+}
+
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border: 1px solid var(--color-zinc-800);
+  border-radius: 40px;
+  color: var(--color-zinc-400);
+}
+
+.hero-headline__title {
+  margin: 0;
+  color: var(--color-zinc-100);
+}
+
+.hero-headline__subtitle {
+  margin: 0;
+  color: var(--color-zinc-100);
+}
+
+/* ---------------------------------------------------------- */
+/* Stats row                                                   */
+/* ---------------------------------------------------------- */
+.hero-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 46px;
+  margin-top: 64px;
+  flex-wrap: wrap;
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-stat__value {
+  margin: 0;
+  color: var(--color-white);
+}
+
+.hero-stat__label {
+  margin: 0;
+  color: var(--color-zinc-400);
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------- */
+/* Rolling band                                                */
+/* ---------------------------------------------------------- */
+.rolling-band {
+  position: relative;
+  padding: 24px 0 32px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.rolling-band__title {
+  color: var(--color-zinc-600);
+  margin: 0 0 24px;
+}
+
+.rolling-band__track-mask {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  /* Fade edges left/right */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 12%,
+    #000 88%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 12%,
+    #000 88%,
+    transparent 100%
+  );
+}
+
+.rolling-band__track {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: max-content;
+  animation: rolling-band-scroll 40s linear infinite;
+}
+
+.rolling-band__logos {
+  display: block;
+  height: 34px;
+  width: auto;
+  flex-shrink: 0;
+  margin-right: 41px;
+  /* Strip is naturally near-white tinted — make sure it shows nicely on zinc/950 */
+  opacity: 0.55;
+}
+
+@keyframes rolling-band-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* Strip width + 41px gap; move exactly one copy left */
+    transform: translateX(calc(-1 * (var(--strip-width, 1253px) + 41px)));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rolling-band__track {
+    animation-duration: 120s;
+  }
+}
+
+/* ---------------------------------------------------------- */
+/* Video modal button (floating, pinned to viewport corner)    */
+/* ---------------------------------------------------------- */
+.video-modal-button {
+  position: sticky;
+  bottom: 24px;
+  align-self: flex-end;
+  margin-right: 24px;
+  z-index: 30;
+  width: 184px;
+  padding: 8px 8px 16px;
+  background: var(--color-zinc-800);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+  box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.6),
+    0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.video-modal-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px -8px rgba(0, 0, 0, 0.7),
+    0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.video-modal-button__thumb {
+  position: relative;
+  aspect-ratio: 160 / 90;
+  width: 100%;
+  background: var(--color-zinc-900) center / cover no-repeat;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.video-modal-button__duration {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  padding: 4px;
+  background: rgba(9, 9, 11, 0.5);
+  border-radius: 4px;
+  color: var(--color-zinc-100);
+}
+
+.video-modal-button__caption {
+  margin: 0;
+  padding: 0 4px;
+  color: var(--color-zinc-300);
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--font-size-13);
+  line-height: 1.2;
+  letter-spacing: -0.15px;
+}
+
+/* ---------------------------------------------------------- */
+/* Video modal                                                 */
+/* ---------------------------------------------------------- */
+.video-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(9, 9, 11, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.video-modal[data-open="true"] {
+  display: flex;
+}
+
+.video-modal__panel {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  aspect-ratio: 16 / 9;
+  background: var(--color-zinc-900);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.video-modal__close {
+  position: absolute;
+  top: -44px;
+  right: 0;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--color-zinc-800);
+  color: var(--color-zinc-100);
+  font-size: 20px;
+  line-height: 1;
+  transition: background 150ms ease;
+}
+
+.video-modal__close:hover {
+  background: var(--color-zinc-700);
+}
+
+.video-modal__video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: var(--color-zinc-900);
+}
+
+/* ---------------------------------------------------------- */
+/* Responsive                                                  */
+/* ---------------------------------------------------------- */
+@media (max-width: 900px) {
+  .hero-content {
+    padding: 24px 20px 80px;
+  }
+
+  .main-nav {
+    padding: 12px 16px;
+    gap: 16px;
+  }
+
+  .main-nav__links {
+    gap: 16px;
+  }
+
+  /* Hide secondary links on smaller screens — primary CTA stays */
+  .main-nav__center {
+    justify-content: flex-end;
+  }
+  .main-nav__links {
+    display: none;
+  }
+
+  .hero-stats {
+    gap: 28px 32px;
+    margin-top: 48px;
+  }
+
+  .video-modal-button {
+    width: 152px;
+    bottom: 16px;
+    right: 16px;
+  }
+}
+
+@media (max-width: 560px) {
+  .info-banner__inner {
+    flex-wrap: wrap;
+    padding: 10px 14px;
+    gap: 10px 16px;
+  }
+
+  .hero-stats {
+    gap: 24px;
+  }
+
+  .video-modal-button {
+    width: 132px;
+  }
+}
