@@ -65,6 +65,16 @@
       transform: scale(0.285714286); /* 500 / 1750 */
     }
 
+    /* ── BG GLOW ─────────────────────────────────────────────────── */
+    .z-bg-img {
+      position: absolute;
+      left: -286px;
+      top: -287px;
+      width: 2325px;
+      height: 2325px;
+      display: block;
+    }
+
     /* ── VIDEO ───────────────────────────────────────────────────── */
     .z-video-clip {
       position: absolute;
@@ -162,7 +172,14 @@
 
   <div class="zing-wrap" id="zingScene">
 
-    <!-- Z-order back → front: handL, handR, video, body, face, eyes -->
+    <!-- Z-order back → front: bg, handL, handR, video, body, face, eyes -->
+
+    <!-- Layer 0: Background glow -->
+    <div class="p-layer" id="zLayerBg" style="z-index:0">
+      <div class="p-inner">
+        <img class="z-bg-img" src="assets/character/bg.svg" alt="">
+      </div>
+    </div>
 
     <!-- Layer 1: Hand left -->
     <div class="p-layer" id="zLayerHandL" style="z-index:1">
@@ -225,6 +242,7 @@
     //  They scale automatically with the canvas. Positive x → right, y → down.
     // ══════════════════════════════════════════════════════════════════
     const LAYERS = {
+      bg:    { x:  1, y:  1 },  // deepest — barely moves
       video: { x:  3, y:  3 },
       body:  { x:  6, y:  5 },
       face:  { x:  7, y:  6 },
@@ -248,6 +266,7 @@
     // ── DOM ──────────────────────────────────────────────────────────
     const scene = document.getElementById('zingScene');
     const L = {
+      bg:    document.getElementById('zLayerBg'),
       video: document.getElementById('zLayerVideo'),
       body:  document.getElementById('zLayerBody'),
       face:  document.getElementById('zLayerFace'),
@@ -267,6 +286,7 @@
       const t = (el, cfg) =>
         (el.style.transform = `translate(${nx * cfg.x}px, ${ny * cfg.y}px)`);
 
+      t(L.bg,    LAYERS.bg);
       t(L.video, LAYERS.video);
       t(L.body,  LAYERS.body);
       t(L.face,  LAYERS.face);
