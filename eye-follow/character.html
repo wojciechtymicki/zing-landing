@@ -62,7 +62,8 @@
       width: 1750px;
       height: 1750px;
       transform-origin: top left;
-      transform: scale(0.285714286); /* 500 / 1750 */
+      transform: scale(0.285714286);
+      /* 500 / 1750 */
     }
 
     /* ── BG GLOW ─────────────────────────────────────────────────── */
@@ -142,8 +143,15 @@
     }
 
     @keyframes z-blink {
-      0%, 100% { transform: scaleY(1); }
-      50%       { transform: scaleY(0.06); }
+
+      0%,
+      100% {
+        transform: scaleY(1);
+      }
+
+      50% {
+        transform: scaleY(0.06);
+      }
     }
 
     .z-eye-pill.blinking {
@@ -242,35 +250,35 @@
     //  They scale automatically with the canvas. Positive x → right, y → down.
     // ══════════════════════════════════════════════════════════════════
     const LAYERS = {
-      bg:    { x:  1, y:  1 },  // deepest — barely moves
-      video: { x:  3, y:  3 },
-      body:  { x:  6, y:  5 },
-      face:  { x:  7, y:  6 },
-      eyes:  { x: 30, y: 30 },
+      bg: { x: 1, y: 1 },  // deepest — barely moves
+      video: { x: 3, y: 3 },
+      body: { x: 6, y: 5 },
+      face: { x: 7, y: 6 },
+      eyes: { x: 30, y: 30 },
       handL: { x: 14, y: 10 },
       handR: { x: 14, y: 10 },
     };
 
     // Max eye-follow travel at the 800px reference size
-    const EYE_MAX = 14;
+    const EYE_MAX = 40;
 
     // ── PRESET STATES (for Webflow interactions) ─────────────────────
     const STATES = {
-      rest:   [ 0,  0],
-      top:    [ 0, -1],
-      bottom: [ 0,  1],
-      left:   [-1,  0],
-      right:  [ 1,  0],
+      rest: [0, 0],
+      top: [0, -1],
+      bottom: [0, 1],
+      left: [-1, 0],
+      right: [1, 0],
     };
 
     // ── DOM ──────────────────────────────────────────────────────────
     const scene = document.getElementById('zingScene');
     const L = {
-      bg:    document.getElementById('zLayerBg'),
+      bg: document.getElementById('zLayerBg'),
       video: document.getElementById('zLayerVideo'),
-      body:  document.getElementById('zLayerBody'),
-      face:  document.getElementById('zLayerFace'),
-      eyes:  document.getElementById('zLayerEyes'),
+      body: document.getElementById('zLayerBody'),
+      face: document.getElementById('zLayerFace'),
+      eyes: document.getElementById('zLayerEyes'),
       handL: document.getElementById('zLayerHandL'),
       handR: document.getElementById('zLayerHandR'),
     };
@@ -286,10 +294,10 @@
       const t = (el, cfg) =>
         (el.style.transform = `translate(${nx * cfg.x}px, ${ny * cfg.y}px)`);
 
-      t(L.bg,    LAYERS.bg);
+      t(L.bg, LAYERS.bg);
       t(L.video, LAYERS.video);
-      t(L.body,  LAYERS.body);
-      t(L.face,  LAYERS.face);
+      t(L.body, LAYERS.body);
+      t(L.face, LAYERS.face);
       t(L.handL, LAYERS.handL);
       t(L.handR, LAYERS.handR);
 
@@ -300,10 +308,10 @@
 
     // ── EYE FOLLOW ───────────────────────────────────────────────────
     function updateEyeFollow(mx, my) {
-      const dx   = mx - 400;
-      const dy   = my - 400;
+      const dx = mx - 400;
+      const dy = my - 400;
       const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-      const t    = Math.min(dist, 400) / 400;
+      const t = Math.min(dist, 400) / 400;
       eox = (dx / dist) * EYE_MAX * t / SCALE;
       eoy = (dy / dist) * EYE_MAX * t / SCALE;
       eyeL.style.transform = `translate(${eox}px, ${eoy}px)`;
@@ -323,7 +331,7 @@
 
     // ── MOUSE ────────────────────────────────────────────────────────
     scene.addEventListener('mousemove', e => {
-      const r  = scene.getBoundingClientRect();
+      const r = scene.getBoundingClientRect();
       const mx = e.clientX - r.left;
       const my = e.clientY - r.top;
 
@@ -342,8 +350,18 @@
 
     scene.addEventListener('click', blink);
 
+    // ── AUTO BLINK ───────────────────────────────────────────────────
+    function scheduleBlink() {
+      const delay = 3000 + Math.random() * 2000; // 3-5s
+      setTimeout(() => {
+        blink();
+        scheduleBlink();
+      }, delay);
+    }
+    scheduleBlink();
+
     // ── STATE API ─────────────────────────────────────────────────────
-    window.zingSetState = function(stateName) {
+    window.zingSetState = function (stateName) {
       const s = STATES[stateName] || STATES.rest;
       Object.values(L).forEach(el => el.classList.remove('no-transition'));
       applyParallax(s[0], s[1]);
